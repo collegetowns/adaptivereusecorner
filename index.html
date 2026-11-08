@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adaptive Reuse Corner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Roboto+Slab:wght@400;600;800&amp;family=Courier+Prime:wght@700&amp;display=swap" rel="stylesheet">
+<style data-own="">
+  :root{
+    --navy:#1f2f7a; --navy-dk:#141f55; --royal:#2b3fa0;
+    --cream:#f6efdc; --paper:#fbf7ec; --ink:#1b1b1b;
+    --barn:#c8291f; --barn-dk:#99190f; --mustard:#e0a526;
+    --wood1:#a8703c; --wood2:#8a5528; --wood3:#c08550;
+    --shadow:0 4px 0 rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Roboto Slab",Georgia,serif; color:var(--ink);
+    background:
+      radial-gradient(circle at 10px 10px, rgba(0,0,0,.28) 2.2px, transparent 2.6px) 0 0/20px 20px,
+      linear-gradient(#c9a77a,#bf9a6a);
+    min-height:100vh;
+  }
+  /* ---------- header: wood beam + flannel band ---------- */
+  header{
+    background:
+      repeating-linear-gradient(90deg, transparent 0 46px, rgba(0,0,0,.08) 46px 48px),
+      repeating-linear-gradient(0deg, var(--wood1) 0 3px, var(--wood3) 3px 5px, var(--wood2) 5px 9px, var(--wood1) 9px 12px);
+    border-bottom:6px solid #5a3415;
+    box-shadow:0 6px 0 rgba(0,0,0,.25);
+    color:#fff; text-align:center; padding:22px 16px 18px; position:relative;
+  }
+  .title-plate{
+    display:inline-block; background:var(--navy); border:4px solid var(--cream);
+    outline:4px solid var(--navy); padding:12px 28px 10px; box-shadow:0 8px 0 rgba(0,0,0,.35);
+  }
+  h1{font-family:"Alfa Slab One",serif; font-weight:400; margin:0; font-size:clamp(30px,6vw,58px);
+     line-height:1; letter-spacing:1px; color:var(--cream); text-shadow:3px 3px 0 var(--barn-dk)}
+  .tagline{margin:6px 0 0; font-weight:600; font-size:clamp(13px,2vw,17px); color:#fff}
+  .flannel{
+    height:22px;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,.35) 0 6px, transparent 6px 22px, rgba(255,255,255,.12) 22px 24px, transparent 24px 40px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 6px, transparent 6px 22px, rgba(255,255,255,.12) 22px 24px, transparent 24px 40px),
+      var(--barn);
+    border-bottom:3px solid #000;
+  }
+  nav{display:flex; justify-content:center; gap:10px; padding:16px 10px 4px; flex-wrap:wrap}
+  .tab{
+    font-family:"Roboto Slab",serif; font-weight:800; font-size:15px; text-transform:uppercase; letter-spacing:1px;
+    background:var(--cream); color:var(--navy); border:3px solid var(--navy); padding:9px 18px; cursor:pointer;
+    box-shadow:var(--shadow); border-radius:3px;
+  }
+  .tab[aria-selected="true"]{background:var(--navy); color:var(--cream)}
+  .tab:active{transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.35)}
+  main{max-width:1200px; margin:0 auto; padding:10px 14px 50px}
+  .view{display:none} .view.on{display:block}
+
+  /* ---------- versus ---------- */
+  .prompt{
+    text-align:center; margin:14px auto 18px; background:var(--navy); color:var(--cream);
+    display:table; padding:8px 20px; font-weight:800; font-size:clamp(16px,2.4vw,22px);
+    border:3px solid var(--cream); box-shadow:var(--shadow); text-transform:uppercase; letter-spacing:1px;
+  }
+  .arena{display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:stretch}
+  .vs{align-self:center; font-family:"Alfa Slab One",serif; font-size:38px; color:var(--cream);
+      background:var(--barn); width:74px; height:74px; border-radius:50%; display:grid; place-items:center;
+      border:4px solid var(--cream); box-shadow:var(--shadow); text-shadow:2px 2px 0 var(--barn-dk)}
+  @media (max-width:820px){ .arena{grid-template-columns:1fr} .vs{justify-self:center; width:58px; height:58px; font-size:28px} }
+
+  .card{
+    background:var(--paper); border:4px solid var(--navy); box-shadow:0 8px 0 rgba(0,0,0,.3);
+    display:flex; flex-direction:column; border-radius:4px; overflow:hidden;
+  }
+  .screen{position:relative; background:#111; aspect-ratio:16/10; border-bottom:4px solid var(--navy)}
+  .screen .frame{position:absolute; inset:0}
+  .screen .pano{position:absolute; inset:0}
+  .powered{display:inline-block; margin-top:12px; font:800 13px "Roboto Slab",serif; letter-spacing:1.5px; text-transform:uppercase;
+     color:var(--navy); background:var(--cream); border:3px solid var(--navy); padding:5px 12px; text-decoration:none; box-shadow:0 3px 0 rgba(0,0,0,.35)}
+  .powered:hover{background:var(--mustard)}
+  .powered b{color:var(--barn)}
+  .screen iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+  .screen .label{position:absolute; left:8px; top:8px; z-index:2; font-family:"Courier Prime",monospace; font-size:12px;
+     color:#fff; background:rgba(0,0,0,.6); padding:2px 6px; pointer-events:none}
+  .viewtoggle{position:absolute; right:8px; top:8px; z-index:2; display:flex; gap:4px}
+  .viewtoggle button{font:700 11px "Roboto Slab",serif; text-transform:uppercase; border:2px solid #fff; background:rgba(0,0,0,.6);
+     color:#fff; padding:3px 7px; cursor:pointer; border-radius:2px}
+  .viewtoggle button.on{background:var(--mustard); color:#000; border-color:#000}
+  .body{padding:14px 16px 12px; display:flex; flex-direction:column; gap:8px; flex:1}
+  .kind{align-self:flex-start; background:var(--barn); color:#fff; font-weight:800; font-size:12px; text-transform:uppercase;
+        letter-spacing:1px; padding:3px 8px; border-radius:2px}
+  .card h2{margin:0; font-size:22px; color:var(--navy); line-height:1.15}
+  .addr{font-size:13.5px; color:#444}
+  .price{font-family:"Alfa Slab One",serif; font-size:20px; color:var(--barn-dk)}
+  .blurb{font-size:15px; line-height:1.45; margin:0}
+  .near{display:flex; flex-wrap:wrap; gap:6px; font-size:13px}
+  .near span{background:#e6dcc0; border:1px solid #b9a77a; padding:3px 7px; border-radius:2px}
+  .actions{display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:6px}
+  .btn{font:800 13px "Roboto Slab",serif; text-transform:uppercase; letter-spacing:.5px; text-decoration:none; cursor:pointer;
+       padding:8px 12px; border:3px solid var(--navy); background:var(--cream); color:var(--navy); border-radius:3px; box-shadow:0 3px 0 rgba(0,0,0,.3)}
+  .btn:active{transform:translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,.3)}
+  .pick{
+    width:100%; font:400 22px "Alfa Slab One",serif; letter-spacing:1px; color:#fff; background:var(--barn);
+    border:0; border-top:4px solid var(--navy); padding:14px; cursor:pointer; text-shadow:2px 2px 0 var(--barn-dk);
+  }
+  .pick:hover{background:#d83a2f}
+  .pick:active{background:var(--barn-dk)}
+  .under{display:flex; justify-content:center; gap:12px; margin-top:22px; flex-wrap:wrap; align-items:center}
+  .tally{font-family:"Courier Prime",monospace; background:#000; color:#7CFC00; padding:6px 12px; border:3px solid #333; font-size:15px}
+  .hint{font-size:13px; color:#2a1a08; background:rgba(255,255,255,.6); padding:4px 10px; border-radius:2px}
+
+  /* ---------- rankings ---------- */
+  .board{background:var(--paper); border:4px solid var(--navy); box-shadow:0 8px 0 rgba(0,0,0,.3); margin-top:16px}
+  .board h3{margin:0; background:var(--navy); color:var(--cream); padding:12px 16px; font-family:"Alfa Slab One",serif; font-weight:400; font-size:24px}
+  .board p.sub{margin:0; padding:10px 16px; font-size:14px; border-bottom:2px dashed #b9a77a}
+  .row{display:grid; grid-template-columns:54px 1fr auto; gap:12px; align-items:center; padding:12px 16px; border-bottom:1px solid #ddd0ad}
+  .row:nth-child(even){background:#f3ead1}
+  .rank{font-family:"Alfa Slab One",serif; font-size:26px; color:var(--barn); text-align:center}
+  .row .nm{font-weight:800; color:var(--navy)}
+  .row .meta{font-size:13px; color:#555}
+  .score{text-align:right; font-family:"Courier Prime",monospace; font-size:15px}
+  .score b{font-size:20px; color:var(--navy)}
+  .bar{height:7px; background:#e0d4b3; margin-top:4px; border-radius:2px; overflow:hidden}
+  .bar i{display:block; height:100%; background:linear-gradient(90deg,var(--mustard),var(--barn))}
+  .empty{padding:26px 16px; text-align:center; font-size:16px}
+
+  /* ---------- about ---------- */
+  .about{background:var(--paper); border:4px solid var(--navy); padding:18px 22px; margin-top:16px; box-shadow:0 8px 0 rgba(0,0,0,.3); line-height:1.55}
+  .about h3{font-family:"Alfa Slab One",serif; font-weight:400; color:var(--navy); margin:.2em 0 .4em; font-size:24px}
+  .about a{color:var(--barn-dk)}
+
+  /* ---------- map modal ---------- */
+  .modal{position:fixed; inset:0; background:rgba(10,14,40,.75); display:none; align-items:center; justify-content:center; z-index:1000; padding:14px}
+  .modal.on{display:flex}
+  .modal-box{background:var(--paper); border:5px solid var(--cream); outline:4px solid var(--navy); width:min(900px,100%); max-height:92vh; display:flex; flex-direction:column}
+  .modal-head{background:var(--navy); color:var(--cream); padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px}
+  .modal-head strong{font-family:"Alfa Slab One",serif; font-weight:400; font-size:20px}
+  .modal-head button{font:800 14px "Roboto Slab",serif; background:var(--barn); color:#fff; border:2px solid #fff; padding:5px 10px; cursor:pointer}
+  #map{height:min(60vh,520px); width:100%; border:0; display:block; background:#ddd}
+  .mapbtns{display:flex; flex-wrap:wrap; gap:8px; padding:10px 14px 0}
+  .mapbtns .btn.on{background:var(--navy); color:var(--cream)}
+  .keybox{margin-top:14px; padding:14px; background:#efe4c6; border:3px dashed var(--navy)}
+  .keybox input{width:100%; max-width:460px; font:15px "Courier Prime",monospace; padding:8px; border:3px solid var(--navy); margin:6px 0}
+  .keystatus{font-weight:800}
+  .addform{display:grid; grid-template-columns:1fr 1fr; gap:10px 14px}
+  .addform .wide{grid-column:1/-1}
+  .addform label{display:flex; flex-direction:column; font-weight:800; font-size:13px; color:var(--navy); gap:4px}
+  .addform small{font-weight:400; color:#555}
+  .addform input,.addform textarea{font:15px "Roboto Slab",serif; padding:7px 8px; border:3px solid var(--navy); background:#fff; border-radius:2px}
+  @media (max-width:640px){.addform{grid-template-columns:1fr}}
+  .nokey{position:absolute; inset:0; display:grid; place-items:center; text-align:center; color:#fff; padding:20px;
+         background:repeating-linear-gradient(45deg,#1f2f7a 0 14px,#24358a 14px 28px); font-size:15px; line-height:1.4}
+  .nokey a{color:var(--mustard); font-weight:800}
+  .legend{padding:10px 14px; font-size:14px; display:flex; flex-wrap:wrap; gap:14px}
+  .dot{display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:5px; vertical-align:-1px; border:2px solid #000}
+  footer{text-align:center; font-size:12.5px; color:#2a1a08; padding:0 16px 30px}
+  footer a{color:#2a1a08}
+
+  /* ---------- layout polish: fit the matchup on one screen ---------- */
+  header{padding:12px 16px 10px}
+  .title-plate{padding:8px 22px 7px; box-shadow:0 5px 0 rgba(0,0,0,.35)}
+  h1{font-size:clamp(26px,4.2vw,46px)}
+  .tagline{margin-top:4px; font-size:clamp(12px,1.5vw,15px)}
+  header .powered{margin-top:8px; padding:3px 10px; font-size:11.5px}
+  .flannel{height:14px}
+  nav{padding:10px 10px 0}
+  .tab{padding:7px 16px; font-size:14px}
+  main{padding-top:6px}
+  .prompt{margin:10px auto 12px; padding:6px 18px; font-size:clamp(14px,1.8vw,19px)}
+
+  .arena{align-items:stretch}
+  #left,#right{display:flex; min-width:0}
+  .card{flex:1; min-width:0}
+  .screen{aspect-ratio:auto; height:clamp(180px, calc(100vh - 620px), 460px)}
+  .body{padding:12px 16px 10px; gap:6px}
+  .card h2{font-size:21px}
+  .price{font-size:18px}
+  .blurb{font-size:14.5px; line-height:1.42}
+  .near{font-size:12.5px}
+  .actions{gap:6px; padding-top:4px}
+  .actions .btn{padding:6px 10px; font-size:11.5px; box-shadow:0 2px 0 rgba(0,0,0,.3)}
+  .pick{padding:11px; font-size:20px}
+  .under{margin-top:14px}
+  @media (max-width:820px){
+    .screen{height:auto; aspect-ratio:16/10}
+    .vs{margin:-4px 0}
+  }
+  @media (max-height:700px) and (min-width:821px){
+    .screen{height:200px}
+    .blurb{font-size:13.5px}
+  }
+  main{max-width:1340px}
+  .arena{gap:14px}
+  .actions .btn{padding:6px 9px; letter-spacing:.3px}
+</style>
+</head>
+<body>
+<header>
+  <div class="title-plate">
+    <h1>Adaptive Reuse Corner</h1>
+    <p class="tagline">Old buildings, new lives. You pick the winner.</p>
+  </div>
+  <div><a class="powered" href="https://www.collegetowns.org/" target="_blank" rel="noopener">Powered by <b>College Towns</b></a></div>
+</header>
+<div class="flannel"></div>
+
+<nav role="tablist">
+  <button class="tab" role="tab" data-view="vote" aria-selected="true">Vote</button>
+  <button class="tab" role="tab" data-view="rank" aria-selected="false">Your Rankings</button>
+  <button class="tab" role="tab" data-view="about" aria-selected="false">About</button>
+  <button class="tab" role="tab" data-view="admin" aria-selected="false" id="adminTab" hidden="">🔧 Builder</button>
+</nav>
+
+<main>
+  <section id="vote" class="view on">
+    <div class="prompt">Which reuse project would you rather take on?</div>
+    <div class="arena">
+      <div id="left"></div>
+      <div class="vs">VS</div>
+      <div id="right"></div>
+    </div>
+    <div class="under">
+      <button class="btn" id="skip">Skip this pair ⟳</button>
+      <span class="tally" id="tally">VOTES: 038</span>
+      <span class="hint">Keyboard: ← left · → right · S skip</span>
+    </div>
+  </section>
+
+  <section id="rank" class="view">
+    <div class="board">
+      <h3>Your Rankings</h3>
+      <p class="sub">Every property starts at 1500 points. Each vote moves points from the loser to the winner, and an upset win moves more. These rankings come from your votes only and are saved in this browser.</p>
+      <div id="rows"></div>
+    </div>
+    <div class="under"><button class="btn" id="reset">Reset my votes</button></div>
+  </section>
+
+  <section id="about" class="view">
+    <div class="about">
+      <h3>What's this?</h3>
+      <p>Each matchup shows two real properties that were for sale when they were featured in the <em>Adaptive Reuse Corner</em> section of <a href="https://www.collegetowns.org/" target="_blank" rel="noopener">College Towns</a>. Look around the outside in Street View or Satellite, then use <strong>Step inside</strong> to see the full listing, interior photos included, on the real estate site.</p>
+      <p>Featured issues:</p>
+      <ul>
+        <li><a href="https://www.collegetowns.org/p/haunted-house-adaptive-reuse" target="_blank" rel="noopener">Haunted House Tour</a></li>
+        <li><a href="https://www.collegetowns.org/p/international-students-weigh-midterms" target="_blank" rel="noopener">International students weigh midterms</a></li>
+        <li><a href="https://www.collegetowns.org/p/why-are-universities-cutting-child" target="_blank" rel="noopener">Why are universities cutting child care?</a></li>
+        <li><a href="https://www.collegetowns.org/p/my-own-students-slaughter-bear-story" target="_blank" rel="noopener">My own students' slaughter bear story</a></li>
+        <li><a href="https://www.collegetowns.org/p/war-departments-university-witch-hunt" target="_blank" rel="noopener">The War Department's university witch hunt</a></li>
+        <li><a href="https://www.collegetowns.org/p/in-defense-of-palm-trees" target="_blank" rel="noopener">In defense of palm trees</a></li>
+      </ul>
+      <p>Listings change. A property may have sold or changed price since it was featured. Distances are straight-line estimates.</p>
+      <div class="keybox" id="suggest">
+        <h3>📬 Suggest a property</h3>
+        <p>Know an old church, school, mill or bank for sale that deserves a second life? Send it in. Suggestions are reviewed before they appear in the voting.</p>
+        <form id="sugForm" class="addform">
+          <label class="wide">Listing link* <input name="link" type="url" required="" placeholder="https://www.zillow.com/homedetails/..."></label>
+          <label class="wide">Street address* <input name="addr" required="" placeholder="123 Elm St, Ithaca, NY 14850"></label>
+          <label>What kind of building?* <input name="kind" required="" placeholder="e.g. Former firehouse"></label>
+          <label>Price <input name="price" placeholder="$450,000"></label>
+          <label class="wide">Why is it a great reuse project? <textarea name="why" rows="3" placeholder="A sentence or two"></textarea></label>
+          <label>Your name <small>(optional)</small><input name="name"></label>
+          <label>Your email <small>(optional, only if you'd like a reply)</small><input name="email" type="email"></label>
+          <input name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px" aria-hidden="true">
+          <div class="wide"><button class="btn" type="submit" id="sugBtn">Send suggestion</button> <span id="sugMsg" class="keystatus"></span></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="admin" class="view">
+    <div class="about">
+      <h3>🔧 Builder</h3>
+      <p>This page is only for you. It opens when the address ends in <code>#builder</code> and isn't linked anywhere. Anything you change here is saved in this browser until you click <strong>Download updated app</strong> at the bottom.</p>
+      <div class="keybox" id="inbox">
+        <h3>📬 Suggestions inbox</h3>
+        <p><strong>Option A: through the visitor's own email.</strong> Enter the address that suggestions should go to. When a visitor submits, Gmail or their email app opens with the suggestion filled in, and they press Send. The address is disguised in the page so it's harder for spam bots to collect.</p>
+        <input id="seIn" type="email" placeholder="you@example.com" autocomplete="off" spellcheck="false" style="width:100%;max-width:460px;font:15px 'Courier Prime',monospace;padding:8px;border:3px solid var(--navy)">
+        <div><button class="btn" id="seSave">Save</button> <span class="keystatus" id="seStatus"></span></div>
+        <p style="margin-top:14px"><strong>Option B (optional): sent automatically, no email app needed.</strong> If you set this up, it's used instead of Option A. Suggestions are emailed to you through <a href="https://formspree.io/" target="_blank" rel="noopener">Formspree</a>, a free form service. To turn it on, create a free account and a new form, then paste the form's ID or its endpoint link (<code>https://formspree.io/f/xxxxxxx</code>) here.</p>
+        <input id="fsIn" placeholder="Formspree form ID or endpoint" autocomplete="off" spellcheck="false" style="width:100%;max-width:460px;font:15px 'Courier Prime',monospace;padding:8px;border:3px solid var(--navy)">
+        <div><button class="btn" id="fsSave">Save</button> <span class="keystatus" id="fsStatus"></span></div>
+        <h3 style="margin-top:16px">✅ Approve a suggestion</h3>
+        <p>Each suggestion email ends with an <strong>approval code</strong> starting with <code>ARC1:</code>. Paste it here to fill in the Add a property form below. Check the details, give it a name and description, and click Add property. To skip a suggestion, just ignore the email.</p>
+        <input id="revIn" placeholder="ARC1:…" style="width:100%;font:13px 'Courier Prime',monospace;padding:8px;border:3px solid var(--navy)">
+        <div style="margin-top:6px"><button class="btn" id="revBtn">Load suggestion</button> <span class="keystatus" id="revMsg"></span></div>
+      </div>
+      <div class="keybox" id="settings">
+        <h3>Turn on in-app Street View</h3>
+        <p>Satellite and map views work right away. To show Street View inside the cards, Google needs a free <strong>Maps Embed API key</strong>. The Embed API has no usage charges.</p>
+        <ol>
+          <li>Go to <a href="https://console.cloud.google.com/google/maps-apis/" target="_blank" rel="noopener">console.cloud.google.com/google/maps-apis</a> and sign in.</li>
+          <li>Create a project and enable the <strong>Maps Embed API</strong>.</li>
+          <li>Under <em>Keys &amp; Credentials</em>, create an API key and paste it below.</li>
+        </ol>
+        <input id="keyIn" placeholder="Paste your Google Maps Embed API key" autocomplete="off" spellcheck="false">
+        <div><button class="btn" id="keySave">Save key</button> <button class="btn" id="keyClear">Remove key</button> <span class="keystatus" id="keyStatus">✓ Street View is on</span></div>
+        <p style="font-size:13px">The key is saved only in this browser. Before you put the site online, restrict the key to your website's address in Google Cloud.</p>
+      </div>
+      <div class="keybox" id="addbox">
+        <h3>➕ Add a property</h3>
+        <form id="addForm" class="addform">
+          <label>Property name* <input name="name" required="" placeholder="e.g. Elm Street Firehouse"></label>
+          <label>Type of building* <input name="kind" required="" placeholder="e.g. Former firehouse"></label>
+          <label class="wide">Full street address* <input name="addr" required="" placeholder="123 Elm St, Ithaca, NY 14850"></label>
+          <label>Price <input name="price" placeholder="$450,000"></label>
+          <label>Listing link* <input name="link" type="url" required="" placeholder="https://www.zillow.com/homedetails/..."></label>
+          <label class="wide">Short description* <textarea name="blurb" required="" rows="3" placeholder="Two or three sentences on the building and its reuse potential."></textarea></label>
+          <label>Nearby university <small>(optional, otherwise picked automatically)</small><input name="uni" placeholder="e.g. Cornell University"></label>
+          <label>College Towns post <small>(optional)</small><input name="source" type="url" placeholder="https://www.collegetowns.org/p/..."></label>
+          <div class="wide"><button class="btn" type="submit">Add property</button> <span id="addMsg" class="keystatus"></span></div>
+        </form>
+        <div id="addedList" style="font-size:14px;margin-top:8px"></div>
+      </div>
+      <div class="keybox" id="builder">
+        <h3>🔧 Builder tool: lock in exact locations</h3>
+        <p>This looks up each <strong>new</strong> property's exact address, finds the nearest Street View photo and aims the camera at the building. It costs about one lookup per property and skips any property already locked in. Visitors then get Street View through the free Embed API.</p>
+        <p>It needs the <strong>Maps JavaScript API</strong> and <strong>Geocoding API</strong> enabled on your key. They only need to be on while you run this.</p>
+        <p class="keystatus" id="bStatus"></p>
+        <button class="btn" id="bRun">Lock in locations</button>
+        <label style="font-size:13px;margin-left:8px"><input type="checkbox" id="bRedo"> Redo all</label>
+        <ul id="bLog" style="font-size:14px"></ul>
+        <h3 style="margin-top:16px">🎯 Fine-tune a view</h3>
+        <p>If a Street View shows the wrong building or the wrong angle, pick the property, turn the camera to face it, and save. Saved views are marked 🎯 and are never changed by Lock in locations. (✅ locked in · ➖ satellite only · ⏳ not looked up yet)</p>
+        <select id="tSel" style="font:15px 'Roboto Slab',serif;padding:7px;border:3px solid var(--navy);max-width:100%"><option value="vallejo">🎯 The Russian Hill Mansion (San Francisco, CA 94133)</option><option value="lumberbaron">🎯 Lumber Baron Inn (Denver, CO 80211)</option><option value="baymiller">🎯 The Black Church (Cincinnati, OH 45214)</option><option value="butte">🎯 Copper Street Convent (Butte, MT 59701)</option><option value="hartford">🎯 Hazel Street Church (Hartford, AR 72938)</option><option value="silo">🎯 The Kansas Missile Silo (Carlton, KS 67448)</option><option value="eudora">🎯 Eudora Church House (Eudora, KS 66025)</option><option value="mazomanie">🎯 Mazomanie White Church (Mazomanie, WI 53560)</option><option value="doble">🎯 Quad at Doble (Cambridge, MA 02138)</option><option value="pumphouse">🎯 Fredericksburg Pump House (Fredericksburg, VA 22401)</option><option value="brookline">🎯 Park Street Church Condo (Brookline, MA 02446)</option><option value="saginaw">🎯 Cornell Street Church (Saginaw, MI)</option><option value="ellsworth">🎯 Ellsworth Ave Bar + Loft (Pittsburgh, PA 15232)</option><option value="deertrail">🎯 Deer Trail Main Street (Deer Trail, CO 80105)</option><option value="silo-il">🎯 Taylor Springs Grain Silo (Taylor Springs, IL 62089)</option><option value="pennscave">🎯 Penn's Cave &amp; Wildlife Park (Centre Hall, PA 16828)</option><option value="goshen">🎯 Goshen Masonic Temple (Goshen, IN 46528)</option><option value="ashland">🎯 Ashland Church House (Ashland, WI 54806)</option><option value="traincar">🎯 Ocean City Train House (Ocean City, WA 98569)</option><option value="gwinn">🎯 Gwinn Middle School (Gwinn, MI 49841)</option><option value="odessa-hotel">🎯 Odessa Hotel (Odessa, WA 99159)</option><option value="odessa-silo">🎯 Moody Road Grain Silo (Odessa, WA 99159)</option><option value="lansford">🎯 Lansford Cathedral (Lansford, PA 18232)</option><option value="roy-bank">🎯 Roy Main Street Bank (Roy, MT 59471)</option><option value="perrysburg-jail">🎯 Perrysburg Jailhouse (Perrysburg, OH 43551)</option><option value="tionesta">🎯 Allegheny River Lighthouse (Tionesta, PA 16353)</option><option value="fortpierre">🎯 Missouri River Lighthouse (Fort Pierre, SD 57532)</option><option value="lenox">🎯 Berkshires Boarding School (Lenox, MA 01240)</option><option value="aboite">🎯 Aboite Schoolhouse (Fort Wayne, IN 46814)</option><option value="auburn-bank">🎯 Auburn Brick Bank (Auburn, NE 68305)</option><option value="danville">🎯 Hazel Street Live-Work (Danville, IL 61832)</option><option value="britt">🎯 Britt Country Church (Britt, IA 50423)</option></select>
+        <div style="margin-top:12px;padding:12px;background:#fff8e6;border:2px solid var(--navy)">
+          <strong>Option 1: copy the view from Google Maps (free, always works)</strong>
+          <ol style="margin:6px 0">
+            <li><a class="btn" id="lOpen" href="https://www.google.com/maps/search/?api=1&amp;query=1001%20Vallejo%20St%2C%20San%20Francisco%2C%20CA%2094133" target="_blank" rel="noopener" style="padding:3px 8px;font-size:12px">Open this address in Google Maps ↗</a></li>
+            <li>Drag the yellow person onto the street, then turn until the building fills the view.</li>
+            <li>Copy the <strong>whole link from your browser's address bar</strong>, not the Share button's short link.<br>
+              <small><strong>Or</strong>, for any photo including user-uploaded ones: click <strong>Share → Embed a map → COPY HTML</strong> and paste that.</small></li>
+            <li>Paste it here and click Save from link.</li>
+          </ol>
+          <input id="lUrl" placeholder="Paste the address-bar link or the Embed a map HTML" style="width:100%;font:13px 'Courier Prime',monospace;padding:8px;border:3px solid var(--navy)">
+          <div style="margin-top:6px"><button class="btn" id="lSave">Save from link</button> <span class="keystatus" id="lMsg"></span></div>
+        </div>
+        <div style="margin-top:10px"><strong>Option 2: aim it inside the app</strong> (needs the Maps JavaScript API on your key)<br>
+        <button class="btn" id="tOpen" style="margin-top:6px">Fine-tune this view</button></div>
+        <p class="keystatus" id="tDone"></p>
+        <h3 style="margin-top:16px">💾 Save into the file</h3>
+        <p>New properties and locked-in locations are saved in this browser first. Click below to download a new copy of the app with everything built in, then replace your old file with it. That copy is the one to share or put online.</p>
+        <button class="btn" id="dlBtn">Download updated app</button> <span id="dlMsg" class="keystatus"></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="tune" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head"><strong id="tTitle">Fine-tune</strong><button id="tClose">Cancel ✕</button></div>
+    <div class="legend"><span id="tAddr"></span></div>
+    <div id="tPano" style="height:min(60vh,520px);width:100%;background:#222"></div>
+    <div class="legend" id="tMsg"></div>
+    <div class="mapbtns" style="padding-bottom:12px">
+      <button class="btn" id="tSave" style="background:var(--barn);color:#fff;border-color:var(--barn-dk)">Save this view</button>
+      <button class="btn" id="tNone">No good Street View: use Satellite</button>
+      <button class="btn" id="tReset">Undo my fine-tune</button>
+    </div>
+  </div>
+</div>
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head"><strong id="mtitle">Map</strong><button id="mclose">Close ✕</button></div>
+    <div class="mapbtns" id="mapbtns"></div>
+    <div class="legend" id="mapnote"></div>
+    <iframe id="map" title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen=""></iframe>
+  </div>
+</div>
+
+<footer><a class="powered" href="https://www.collegetowns.org/" target="_blank" rel="noopener">Powered by <b>College Towns</b></a><br><br><a href="#" id="footSuggest">Suggest a property</a> · Listings via Zillow, Realtor.com, LoopNet and 1KBB, as featured by College Towns. Street View, satellite and map views © Google.</footer>
+
+<script>
+/* ================== DATA ================== */
+const ISSUE = {
+  haunted:"https://www.collegetowns.org/p/haunted-house-adaptive-reuse",
+  midterms:"https://www.collegetowns.org/p/international-students-weigh-midterms",
+  childcare:"https://www.collegetowns.org/p/why-are-universities-cutting-child",
+  bear:"https://www.collegetowns.org/p/my-own-students-slaughter-bear-story",
+  war:"https://www.collegetowns.org/p/war-departments-university-witch-hunt",
+  palm:"https://www.collegetowns.org/p/in-defense-of-palm-trees"
+};
+// view: "sv" = Street View first, "sat" = satellite first
+const PROPS = [
+  {id:"vallejo", name:"The Russian Hill Mansion", kind:"Former opium den", price:"$25,000,000",
+   addr:"1001 Vallejo St, San Francisco, CA 94133", lat:37.79855, lng:-122.41513, view:"sv",
+   blurb:"A restored San Francisco mansion with a colorful past as an opium den and brothel. It also had a turn as a filming location for Netflix's The OA.",
+   link:"https://www.zillow.com/homedetails/1001-Vallejo-St-San-Francisco-CA-94133/15066753_zpid/", site:"Zillow", issue:"haunted"},
+  {id:"lumberbaron", name:"Lumber Baron Inn", kind:"Victorian B&B", price:"≈ $3,000,000",
+   addr:"2555 W 37th Ave, Denver, CO 80211", lat:39.76785, lng:-105.01790, view:"sv",
+   blurb:"An 1890s Victorian mansion that now runs as a bed-and-breakfast. Locals say it's haunted after a notorious double homicide, and it appeared on Netflix's 28 Days Haunted.",
+   link:"https://www.zillow.com/homedetails/2555-W-37th-Ave-Denver-CO-80211/119692911_zpid/", site:"Zillow", issue:"haunted"},
+  {id:"baymiller", name:"The Black Church", kind:"Church conversion", price:"$1,200,000",
+   addr:"1835 Baymiller St, Cincinnati, OH 45214", lat:39.11535, lng:-84.52955, view:"sv",
+   blurb:"An 1866 Gothic Revival church with cathedral ceilings, stained glass and its old pipe organ. The interior has been painted entirely black.",
+   link:"https://www.zillow.com/homedetails/1835-Baymiller-St-Cincinnati-OH-45214/2056603343_zpid/", site:"Zillow", issue:"haunted"},
+  {id:"butte", name:"Copper Street Convent", kind:"Former convent", price:"≈ $750,000",
+   addr:"1131 W Copper St, Butte, MT 59701", lat:46.01445, lng:-112.55135, view:"sv",
+   blurb:"A 1917 brick building that has been a convent, a school and a domestic violence center. A plan to turn it into a coding academy was turned down, so now it's marketed as a single-family home.",
+   link:"https://www.zillow.com/homedetails/1131-W-Copper-St-Butte-MT-59701/2101623400_zpid/", site:"Zillow", issue:"haunted"},
+  {id:"hartford", name:"Hazel Street Church", kind:"Church → apartments", price:"Under $40,000",
+   addr:"28 S Hazel St, Hartford, AR 72938", lat:35.02240, lng:-94.38050, view:"sv",
+   blurb:"A small-town former church that was apparently split into five apartments at some point. Not much else is known, which is part of the adventure.",
+   link:"https://www.zillow.com/homedetails/28-S-Hazel-St-Hartford-AR-72938/243801510_zpid/", site:"Zillow", issue:"haunted"},
+  {id:"silo", name:"The Kansas Missile Silo", kind:"Former missile silo", price:"$1,600,000",
+   addr:"551 Daisy Rd, Carlton, KS 67448", lat:38.66500, lng:-97.30500, view:"sat",
+   blurb:"From ground level it looks like empty prairie. Underneath, a decommissioned missile silo holds a full house. It's the ultimate bunker for anyone planning for the end of the world, or just for finals week.",
+   link:"https://www.realtor.com/realestateandhomes-detail/551-Daisy-Rd_Carlton_KS_67448_M94649-49578", site:"Realtor.com", issue:"midterms"},
+  {id:"eudora", name:"Eudora Church House", kind:"Church conversion", price:"$1,300,000",
+   addr:"718 Church St, Eudora, KS 66025", lat:38.94260, lng:-95.09850, view:"sv",
+   blurb:"A handsome, not-at-all-spooky church conversion about 15 minutes from the University of Kansas. College Towns pegged it as a fit for a professor or administrator.",
+   link:"https://www.zillow.com/homedetails/718-Church-St-Eudora-KS-66025/312757168_zpid/", site:"Zillow", issue:"midterms"},
+  {id:"mazomanie", name:"Mazomanie White Church", kind:"Church conversion", price:"≈ $500,000",
+   addr:"212 Anne St, Mazomanie, WI 53560", lat:43.17700, lng:-89.79550, view:"sv",
+   blurb:"A bright white church with a tasteful finish, about 35 minutes from UW–Madison. It's priced within reach of a professor's salary.",
+   link:"https://www.zillow.com/homedetails/212-Anne-St-Mazomanie-WI-53560/191040689_zpid/", site:"Zillow", issue:"midterms"},
+  {id:"doble", name:"Quad at Doble", kind:"Former college campus", price:"$75,000,000",
+   addr:"Quad at Doble, Cambridge, MA 02138", q:"Lesley University, 29 Everett St, Cambridge, MA", lat:42.38100, lng:-71.11850, view:"sat",
+   blurb:"A former Lesley University campus with dorms, classrooms, labs, offices and a gym, in the backyard of Harvard and MIT. It's a whole campus for sale. Maybe a neighbor college wants it?",
+   link:"https://www.zillow.com/homedetails/Quad-At-Doble-Cambridge-MA-02138/466108736_zpid/", site:"Zillow", issue:"midterms"},
+  {id:"pumphouse", name:"Fredericksburg Pump House", kind:"Historic pump house", price:"$1,100,000",
+   addr:"301 Sophia St, Fredericksburg, VA 22401", lat:38.30580, lng:-77.45670, view:"sv",
+   blurb:"A historic waterfront pump house with river views in Fredericksburg, one of the country's best walkable small towns, about an hour from D.C.",
+   link:"https://www.zillow.com/homedetails/301-Sophia-St-Fredericksburg-VA-22401/242067235_zpid/", site:"Zillow", issue:"midterms"},
+  {id:"brookline", name:"Park Street Church Condo", kind:"Church → condo", price:"$1,200,000",
+   addr:"90 Park St, Apt 35, Brookline, MA 02446", q:"90 Park St, Brookline, MA 02446", lat:42.34070, lng:-71.12050, view:"sv",
+   blurb:"A stunning church-to-condo conversion. The catch is that you're buying one slice of the sanctuary, not the whole church.",
+   link:"https://www.zillow.com/homedetails/90-Park-St-APT-35-Brookline-MA-02446/56567920_zpid/", site:"Zillow", issue:"childcare"},
+  {id:"saginaw", name:"Cornell Street Church", kind:"Unconverted church", price:"Under $249,000",
+   addr:"511 W Cornell St, Saginaw, MI", lat:43.42050, lng:-83.97250, view:"sv",
+   blurb:"A former church that has barely been touched, so it's a blank canvas. Plan on a serious renovation budget.",
+   link:"https://www.loopnet.com/Listing/511-W-Cornell-St-Saginaw-MI/42077074/", site:"LoopNet", issue:"childcare"},
+  {id:"ellsworth", name:"Ellsworth Ave Bar + Loft", kind:"Bar with live-work unit", price:"$2,300,000",
+   addr:"5801 Ellsworth Ave, Pittsburgh, PA 15232", lat:40.45450, lng:-79.92980, view:"sv",
+   blurb:"A neighborhood bar with a live-work unit attached. Pour drinks downstairs, sleep upstairs, and finally live out your Cheers fantasy.",
+   link:"https://www.zillow.com/homedetails/5801-Ellsworth-Ave-Pittsburgh-PA-15232/465704864_zpid/", site:"Zillow", issue:"childcare"},
+  {id:"deertrail", name:"Deer Trail Main Street", kind:"Live-work storefront", price:"Under $350,000",
+   addr:"660 1st Ave, Deer Trail, CO 80105", lat:39.61530, lng:-104.04300, view:"sv",
+   blurb:"A live-work building in what used to be Deer Trail's original downtown, a fading plains town about an hour from Denver.",
+   link:"https://www.zillow.com/homedetails/660-1st-Ave-Deer-Trail-CO-80105/13091056_zpid/", site:"Zillow", issue:"childcare"},
+  {id:"silo-il", name:"Taylor Springs Grain Silo", kind:"Grain silo + house", price:"$40,000",
+   addr:"102 Carrie St, Taylor Springs, IL 62089", lat:39.13000, lng:-89.49300, view:"sat",
+   blurb:"A grain silo with a house on the same lot, billed as a local landmark waiting for someone with vision. It might be the cheapest landmark in America.",
+   link:"https://www.zillow.com/homedetails/102-Carrie-St-Taylor-Springs-IL-62089/465588474_zpid/", site:"Zillow", issue:"childcare"},
+  {id:"pennscave", name:"Penn's Cave & Wildlife Park", kind:"Cave + wildlife park", price:"$34,000,000",
+   addr:"222 Penns Cave Rd, Centre Hall, PA 16828", lat:40.88230, lng:-77.61450, view:"sat",
+   blurb:"More than 1,400 acres of farms, animals, picnic grounds, a hotel, housing and a huge cave, just down the road from Penn State.",
+   link:"https://www.1kbb.com/property-search/detail/337/PACE2520682/222-penns-cave-rd-centre-hall-pa-16828/", site:"1KBB", issue:"childcare"},
+  {id:"goshen", name:"Goshen Masonic Temple", kind:"Former Masonic temple", price:"≈ $650,000",
+   addr:"301 S 5th St, Goshen, IN 46528", lat:41.58000, lng:-85.83400, view:"sv",
+   blurb:"A Masonic temple with its interior intact, meeting room included, and no conversion yet. It's about 45 minutes from Notre Dame.",
+   link:"https://www.zillow.com/homedetails/301-S-5th-St-Goshen-IN-46528/464808861_zpid/", site:"Zillow", issue:"childcare"},
+  /* ---- from "My own students' slaughter bear story" ---- */
+  {id:"ashland", name:"Ashland Church House", kind:"Church → salon → home", price:"$624,900",
+   addr:"620 3rd St W, Ashland, WI 54806", lat:46.58950, lng:-90.88900,
+   blurb:"A former church that had a second life as a nail salon. Now it's on the market as a single-family home on the shore of Lake Superior.",
+   link:"https://www.zillow.com/homedetails/620-3rd-St-W-Ashland-WI-54806/303859708_zpid/", site:"Zillow", issue:"bear"},
+  {id:"traincar", name:"Ocean City Train House", kind:"Railcar home", price:"$549,000",
+   addr:"204 Ocean Blvd, Ocean City, WA 98569", lat:47.06400, lng:-124.16200,
+   blurb:"A train you can actually live in, parked near the Washington coast. It's all aboard for beach weekends.",
+   link:"https://www.zillow.com/homedetails/204-Ocean-Blvd-Ocean-City-WA-98569/55074276_zpid/", site:"Zillow", issue:"bear"},
+  /* ---- from "The War Department's university witch hunt" ---- */
+  {id:"gwinn", name:"Gwinn Middle School", kind:"School → home", price:"$450,000",
+   addr:"530 Mitchell St, Gwinn, MI 49841", lat:46.28150, lng:-87.44100,
+   blurb:"A former middle school in Michigan's Upper Peninsula, now a home. College Towns found the price steep for Michigan, but it comes with your own basketball court.",
+   link:"https://www.zillow.com/homedetails/530-Mitchell-St-Gwinn-MI-49841/2128366324_zpid/", site:"Zillow", issue:"war"},
+  {id:"odessa-hotel", name:"Odessa Hotel", kind:"Old hotel", price:"$350,000",
+   addr:"12 W 4th Ave, Odessa, WA 99159", lat:47.33250, lng:-118.68950,
+   blurb:"An old small-town hotel on the wheat plains of eastern Washington, ready for a new chapter as a home, an inn or something in between.",
+   link:"https://www.zillow.com/homedetails/12-W-4th-Ave-Odessa-WA-99159/464427814_zpid/", site:"Zillow", issue:"war"},
+  {id:"odessa-silo", name:"Moody Road Grain Silo", kind:"Grain silo", price:"$895,000",
+   addr:"2171 Moody Rd N, Odessa, WA 99159", lat:47.36000, lng:-118.72000,
+   blurb:"An old grain silo out in Washington farm country. College Towns ranked it third of its batch for looks.",
+   link:"https://www.zillow.com/homedetails/2171-Moody-Rd-N-Odessa-WA-99159/2057908345_zpid/", site:"Zillow", issue:"war"},
+  {id:"lansford", name:"Lansford Cathedral", kind:"Former church", price:"$1,100,000",
+   addr:"124 E Abbott St, Lansford, PA 18232", lat:40.83200, lng:-75.88100,
+   blurb:"A former cathedral in Pennsylvania coal country. College Towns ranked it the best-looking of its batch, and by comparison it's reasonably priced.",
+   link:"https://www.zillow.com/homedetails/124-E-Abbott-St-Lansford-PA-18232/462391451_zpid/", site:"Zillow", issue:"war"},
+  {id:"roy-bank", name:"Roy Main Street Bank", kind:"Old bank", price:"$100,000",
+   addr:"210 Main St, Roy, MT 59471", lat:47.33150, lng:-108.95950,
+   blurb:"An old bank on the main street of a tiny central Montana town. The vault is optional, but the big-sky views come standard.",
+   link:"https://www.zillow.com/homedetails/210-Main-St-Roy-MT-59471/97352222_zpid/", site:"Zillow", issue:"war"},
+  {id:"perrysburg-jail", name:"Perrysburg Jailhouse", kind:"Former jail", price:"$385,000",
+   addr:"240 W Indiana Ave, Perrysburg, OH 43551", lat:41.55550, lng:-83.62900,
+   blurb:"A former jail in a historic Ohio river town just outside Toledo. College Towns ranked it second of its batch for looks, so it's a much nicer place to stay than it used to be.",
+   link:"https://www.zillow.com/homedetails/240-W-Indiana-Ave-Perrysburg-OH-43551/35678726_zpid/", site:"Zillow", issue:"war"},
+  /* ---- from "In defense of palm trees" ---- */
+  {id:"tionesta", name:"Allegheny River Lighthouse", kind:"Lighthouse", price:"$1,300,000",
+   addr:"5 Lighthouse Is, Tionesta, PA 16353", lat:41.49300, lng:-79.45600,
+   blurb:"A lighthouse in northwestern Pennsylvania, sitting on the Allegheny River far from any ocean.",
+   link:"https://www.zillow.com/homedetails/5-Lighthouse-Is-Tionesta-PA-16353/463699287_zpid/", site:"Zillow", issue:"palm"},
+  {id:"fortpierre", name:"Missouri River Lighthouse", kind:"Lighthouse", price:"Under $250,000",
+   addr:"20147 Cove Pl, Fort Pierre, SD 57532", lat:44.43000, lng:-100.42000,
+   blurb:"A lighthouse on the Missouri River in central South Dakota. College Towns called it a deal.",
+   link:"https://www.zillow.com/homedetails/20147-Cove-Pl-Fort-Pierre-SD-57532/2067801438_zpid/", site:"Zillow", issue:"palm"},
+  {id:"lenox", name:"Berkshires Boarding School", kind:"Former boarding school campus", price:"$3,000,000",
+   addr:"349 Old Stockbridge Rd, Lenox, MA 01240", lat:42.34800, lng:-73.29300,
+   blurb:"An entire former boarding-school campus in the Berkshires, priced reasonably for everything you get. It's perfect for a school for gifted youngsters, but remember that empty campuses are expensive to keep up.",
+   link:"https://www.zillow.com/homedetails/349-Old-Stockbridge-Rd-Lenox-MA-01240/443708127_zpid/", site:"Zillow", issue:"palm"},
+  {id:"aboite", name:"Aboite Schoolhouse", kind:"One-room schoolhouse", price:"≈ $700,000",
+   addr:"14318 Aboite Center Rd, Fort Wayne, IN 46814", lat:41.02550, lng:-85.31200,
+   blurb:"A one-room schoolhouse with handsome additions on the edge of Fort Wayne. Its owner is sad to be selling.",
+   link:"https://www.zillow.com/homedetails/14318-Aboite-Center-Rd-Fort-Wayne-IN-46814/246485480_zpid/", site:"Zillow", issue:"palm"},
+  {id:"auburn-bank", name:"Auburn Brick Bank", kind:"Former bank", price:"$85,000",
+   addr:"1901 N St, Auburn, NE 68305", lat:40.39250, lng:-95.84100,
+   blurb:"A brick bank in a small Nebraska town. It probably needs a lot of work, but the interior doesn't look bad.",
+   link:"https://www.zillow.com/homedetails/1901-N-St-Auburn-NE-68305/465139930_zpid/", site:"Zillow", issue:"palm"},
+  {id:"danville", name:"Hazel Street Live-Work", kind:"Office + upstairs home", price:"$100,000",
+   addr:"32 Hazel St, Danville, IL 61832", lat:40.12500, lng:-87.62900,
+   blurb:"An office downstairs with a home upstairs in a small Illinois city. It's the kind of live-work building that used to be common, and College Towns would like to see them come back.",
+   link:"https://www.zillow.com/homedetails/32-Hazel-St-Danville-IL-61832/2078367131_zpid/", site:"Zillow", issue:"palm"},
+  {id:"britt", name:"Britt Country Church", kind:"Unconverted church", price:"≈ $100,000",
+   addr:"905 290th St, Britt, IA 50423", lat:43.10000, lng:-93.80000,
+   blurb:"A rural Iowa church with its pews and altars still in place. You could convert it, or start your own revival.",
+   link:"https://www.zillow.com/homedetails/905-290th-St-Britt-IA-50423/93855287_zpid/", site:"Zillow", issue:"palm"},
+];
+/* Properties added with the "Add a property" form. ADDED_IN is written by
+   "Download updated app"; ones added since then live in this browser. */
+const ADDED_IN = /*ADDED_START*/[]/*ADDED_END*/;
+let ADDED_LOCAL=[]; try{ADDED_LOCAL=JSON.parse(localStorage.getItem("arc-added")||"[]");}catch(e){}
+[...ADDED_IN,...ADDED_LOCAL].forEach(p=>{if(!PROPS.some(x=>x.id===p.id)) PROPS.push(p);});
+
+const UNIS = [
+  ["UC Berkeley",37.8719,-122.2585],["UCSF",37.7631,-122.4586],["University of San Francisco",37.7765,-122.4506],["San Francisco State",37.7241,-122.4799],
+  ["Regis University",39.7900,-105.0320],["CU Denver",39.7451,-105.0050],["University of Denver",39.6766,-104.9619],["CU Anschutz",39.7457,-104.8386],
+  ["University of Cincinnati",39.1329,-84.5150],["Xavier University",39.1494,-84.4737],
+  ["Montana Tech",46.0130,-112.5580],
+  ["Carl Albert State College",35.0500,-94.6200],["UA Fort Smith",35.3610,-94.3740],
+  ["Kansas Wesleyan",38.8180,-97.6100],["Kansas State",39.1910,-96.5806],["University of Kansas",38.9543,-95.2558],["Baker University",38.7790,-95.1860],
+  ["UW–Madison",43.0766,-89.4125],
+  ["Lesley University",42.3810,-71.1190],["Harvard",42.3770,-71.1167],["MIT",42.3601,-71.0942],["Boston University",42.3505,-71.1054],["Boston College",42.3355,-71.1685],
+  ["University of Mary Washington",38.3016,-77.4744],
+  ["Saginaw Valley State",43.5130,-83.9600],["Delta College",43.5590,-83.9850],
+  ["Carnegie Mellon",40.4433,-79.9436],["University of Pittsburgh",40.4444,-79.9608],["Chatham University",40.4490,-79.9240],
+  ["Penn State",40.7982,-77.8599],
+  ["Goshen College",41.5640,-85.8290],["Notre Dame",41.7052,-86.2353],
+  ["Greenville University",38.8890,-89.4120],
+  ["UW–Superior",46.7180,-92.0890],["Grays Harbor College",46.9535,-123.7920],["The Evergreen State College",47.0730,-122.9760],
+  ["Northern Michigan University",46.5590,-87.4050],["Eastern Washington University",47.4900,-117.5830],["Big Bend Community College",47.1700,-119.3190],
+  ["Lehigh University",40.6070,-75.3780],["MSU–Northern",48.5470,-109.6740],["Montana State University",45.6670,-111.0500],
+  ["University of Toledo",41.6580,-83.6140],["Bowling Green State",41.3780,-83.6370],["PennWest Clarion",41.2090,-79.3790],["Allegheny College",41.6480,-80.1450],
+  ["South Dakota State",44.3190,-96.7840],["Black Hills State",44.4960,-103.8680],["Williams College",42.7120,-73.2030],["UMass Amherst",42.3868,-72.5301],
+  ["Purdue Fort Wayne",41.1170,-85.1090],["University of Saint Francis",41.1070,-85.1660],["Peru State College",40.4770,-95.7300],["Nebraska–Lincoln",40.8202,-96.7005],
+  ["Danville Area Community College",40.1350,-87.6050],["UIUC",40.1020,-88.2272],["Waldorf University",43.2630,-93.6370],["Iowa State",42.0267,-93.6465],["Eastern Illinois",39.4830,-88.1750],["SIU Edwardsville",38.7930,-89.9970],
+];
+const CITIES = [
+  ["San Francisco",37.7749,-122.4194],["Oakland",37.8044,-122.2712],["Denver",39.7392,-104.9903],["Aurora, CO",39.7294,-104.8319],
+  ["Cincinnati",39.1031,-84.5120],["Butte",46.0038,-112.5348],["Missoula",46.8721,-113.9940],["Fort Smith",35.3859,-94.3985],
+  ["Salina",38.8403,-97.6114],["Wichita",37.6872,-97.3301],["Lawrence",38.9717,-95.2353],["Kansas City",39.0997,-94.5786],["Topeka",39.0473,-95.6752],
+  ["Madison",43.0731,-89.4012],["Boston",42.3601,-71.0589],["Fredericksburg",38.3032,-77.4605],["Washington, D.C.",38.9072,-77.0369],
+  ["Saginaw",43.4195,-83.9508],["Flint",43.0125,-83.6875],["Pittsburgh",40.4406,-79.9959],["State College",40.7934,-77.8600],
+  ["St. Louis",38.6270,-90.1994],
+  ["Duluth",46.7867,-92.1005],["Aberdeen, WA",46.9754,-123.8157],["Olympia",47.0379,-122.9007],["Marquette",46.5436,-87.3954],
+  ["Spokane",47.6588,-117.4260],["Moses Lake",47.1301,-119.2781],["Allentown",40.6023,-75.4714],["Great Falls",47.5053,-111.3008],["Billings",45.7833,-108.5007],
+  ["Toledo",41.6528,-83.5379],["Erie",42.1292,-80.0851],["Pierre",44.3683,-100.3510],["Pittsfield",42.4501,-73.2454],["Fort Wayne",41.0793,-85.1394],
+  ["Lincoln, NE",40.8136,-96.7026],["Omaha",41.2565,-95.9345],["Champaign",40.1164,-88.2434],["Danville, IL",40.1245,-87.6300],["Mason City",43.1536,-93.2010],["Springfield, IL",39.7817,-89.6501],["Goshen",41.5823,-85.8344],["South Bend",41.6764,-86.2520],
+];
+
+/* ================== HELPERS ================== */
+function miles(a,b,c,d){const R=3958.8,r=x=>x*Math.PI/180;const dl=r(c-a),dn=r(d-b);
+  const h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+function nearest(p,list){if(typeof p.lat!=="number")return null;let best=null;for(const [n,la,ln] of list){const m=miles(p.lat,p.lng,la,ln);if(!best||m<best.m)best={n,la,ln,m};}return best;}
+function fmt(m){return m<1?"under 1 mi":(m<10?m.toFixed(1):Math.round(m))+" mi";}
+PROPS.forEach(p=>{p.uni=nearest(p,UNIS);p.city=nearest(p,CITIES);});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---- Google embeds ----
+   Keyless "output=embed" maps work without setup. In-app Street View needs the
+   official Maps Embed API (free), so it only runs once a key is saved. */
+const BUILT_IN_KEY="AIzaSyAXgHhcRwyvoWOB2unbhOB0O2WQtq1u8bc";
+let API_KEY=BUILT_IN_KEY; try{API_KEY=localStorage.getItem("arc-gkey")||BUILT_IN_KEY;}catch(e){}
+const Q=p=>encodeURIComponent(p.q||p.addr);
+const E="https://www.google.com/maps/embed/v1/";
+function svSrc(p){
+  const b=BAKED[p.id];
+  if(b&&b.embedSrc) return b.embedSrc;
+  if(!API_KEY||typeof p.lat!=="number") return "";
+  return b&&b.pano
+    ? `${E}streetview?key=${API_KEY}&pano=${encodeURIComponent(b.pano)}&heading=${b.heading}&pitch=${b.pitch??8}&fov=${b.fov??80}`
+    : `${E}streetview?key=${API_KEY}&location=${p.lat},${p.lng}&fov=80&pitch=5`;
+}
+function satSrc(p){return API_KEY?`${E}place?key=${API_KEY}&q=${Q(p)}&maptype=satellite&zoom=19`
+                                 :`https://maps.google.com/maps?q=${Q(p)}&t=k&z=19&output=embed`;}
+function mapSrc(p,z=14){return API_KEY?`${E}place?key=${API_KEY}&q=${Q(p)}&zoom=${z}`
+                                 :`https://maps.google.com/maps?q=${Q(p)}&t=m&z=${z}&output=embed`;}
+function dirSrc(p,dest){const d=encodeURIComponent(dest);
+  return API_KEY?`${E}directions?key=${API_KEY}&origin=${Q(p)}&destination=${d}&mode=driving`
+                :`https://maps.google.com/maps?saddr=${Q(p)}&daddr=${d}&output=embed`;}
+function dirLink(p,dest){return `https://www.google.com/maps/dir/?api=1&origin=${Q(p)}&destination=${encodeURIComponent(dest)}`;}
+function gmapsPano(p){return typeof p.lat==="number"
+  ? `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${p.lat},${p.lng}`
+  : `https://www.google.com/maps/search/?api=1&query=${Q(p)}`;}
+function srcFor(p,m){return m==="sv"?svSrc(p):m==="map"?mapSrc(p,15):satSrc(p);}
+function labelFor(m){return m==="sv"?"STREET VIEW":m==="map"?"MAP":"SATELLITE";}
+function noKeyHTML(p){return `<div class="nokey"><div>Street View isn't available here.<br>
+  <a href="${gmapsPano(p)}" target="_blank" rel="noopener">Open Street View in Google Maps ↗</a></div></div>`;}
+
+/* ================== STATE (Elo) ================== */
+const KEY="arc-state-v1"; const K=32;
+let state=load();
+function fresh(){const s={votes:0,r:{},w:{},l:{},last:[]};PROPS.forEach(p=>{s.r[p.id]=1500;s.w[p.id]=0;s.l[p.id]=0;});return s;}
+function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+  const f=fresh(); if(!s) return f;
+  for(const p of PROPS){if(!(p.id in s.r)){s.r[p.id]=1500;s.w[p.id]=0;s.l[p.id]=0;}}
+  s.last=s.last||[]; return s;}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+
+function vote(winId,loseId){
+  const ra=state.r[winId], rb=state.r[loseId];
+  const ea=1/(1+10**((rb-ra)/400));
+  state.r[winId]=ra+K*(1-ea); state.r[loseId]=rb-K*(1-ea);
+  state.w[winId]++; state.l[loseId]++; state.votes++;
+  save(); nextPair();
+}
+
+/* ================== PAIRING ================== */
+let pair=[];
+function games(id){return state.w[id]+state.l[id];}
+function nextPair(){
+  const recent=new Set(state.last.slice(-4));
+  let pool=PROPS.filter(p=>!recent.has(p.id)); if(pool.length<2) pool=PROPS.slice();
+  // first: least-played (random tiebreak)
+  pool.sort((a,b)=>games(a.id)-games(b.id)||Math.random()-.5);
+  const a=pool[0];
+  // second: weighted toward similar rating, with randomness
+  const rest=pool.slice(1).map(p=>({p,score:Math.abs(state.r[p.id]-state.r[a.id])+Math.random()*180+games(p.id)*6}))
+                 .sort((x,y)=>x.score-y.score);
+  const b=rest[0].p;
+  pair=Math.random()<.5?[a,b]:[b,a];
+  state.last.push(a.id,b.id); state.last=state.last.slice(-8); save();
+  render();
+}
+
+/* ================== RENDER ================== */
+function cardHTML(p,side){
+  return `<article class="card">
+    <div class="screen">
+      <span class="label">STREET VIEW</span>
+      <div class="viewtoggle">
+        <button data-m="sv">Street</button>
+        <button data-m="sat">Satellite</button>
+        <button data-m="map">Map</button>
+      </div>
+      <div class="frame"></div>
+    </div>
+    <div class="body">
+      <span class="kind">${esc(p.kind)}</span>
+      <h2>${esc(p.name)}</h2>
+      <div class="addr">${esc(p.addr)}</div>
+      <div class="price">${esc(p.price)}</div>
+      <p class="blurb">${esc(p.blurb)}</p>
+      <div class="near">${nearHTML(p)}</div>
+      <div class="actions">
+        <a class="btn" href="${p.link}" target="_blank" rel="noopener">Step inside on ${esc(p.site)} →</a>
+        <button class="btn" data-map="${p.id}">Map to Uni / Big City 📍</button>
+      </div>
+    </div>
+    <button class="pick" data-side="${side}">${side==="L"?"◀ ":""}Pick this one${side==="R"?" ▶":""}</button>
+  </article>`;
+}
+function render(){
+  const [a,b]=pair;
+  document.getElementById("left").innerHTML=cardHTML(a,"L");
+  document.getElementById("right").innerHTML=cardHTML(b,"R");
+  document.getElementById("tally").textContent="VOTES: "+String(state.votes).padStart(3,"0");
+  wireCards();
+}
+const NEAR_LIMIT=100; // miles: farther than this shows N/A
+const uniOK=p=>p.uni&&p.uni.m<=NEAR_LIMIT, cityOK=p=>p.city&&p.city.m<=NEAR_LIMIT;
+function nearHTML(p){
+  if(!p.uni||!p.city) return `<span>📏 Distances appear after you run Lock in locations</span>`;
+  return (uniOK(p)?`<span>🎓 ${esc(p.uni.n)} · ${fmt(p.uni.m)}</span>`:`<span>🎓 University: N/A (none within ${NEAR_LIMIT} mi)</span>`)
+       + (cityOK(p)?`<span>🏙️ ${esc(p.city.n)} · ${fmt(p.city.m)}</span>`:`<span>🏙️ Big city: N/A (none within ${NEAR_LIMIT} mi)</span>`);}
+const iframeHTML=(p,src)=>`<iframe referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="${esc(p.name)} view" src="${src}"></iframe>`;
+
+function wireCards(){
+  document.querySelectorAll(".card").forEach((card,i)=>{
+    const p=pair[i];
+    const fr=card.querySelector(".frame");
+    const setMode=m=>{
+      card.querySelectorAll(".viewtoggle button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));
+      card.querySelector(".label").textContent=labelFor(m);
+      if(m==="sv"){
+        if(!API_KEY){fr.innerHTML=noKeyHTML(p);
+          return;}
+        const s=svSrc(p);
+        fr.innerHTML=s?iframeHTML(p,s):`<div class="nokey"><div>Run <b>Lock in locations</b> in the About tab to add Street View for this property.</div></div>`;
+      } else fr.innerHTML=iframeHTML(p,srcFor(p,m));
+    };
+    card.querySelectorAll(".viewtoggle button").forEach(btn=>btn.onclick=()=>setMode(btn.dataset.m));
+    card.querySelector(".pick").onclick=()=>choose(i);
+    card.querySelector("[data-map]").onclick=()=>openMap(p);
+    setMode(hasNoStreetView(p)||typeof p.lat!=="number"?"sat":"sv");
+  });
+}
+
+/* ================== LOCKED-IN LOCATIONS ==================
+   BAKED holds each building's exact address point, the nearest Street View
+   photo (pano) and the camera direction that faces the building. With it, the
+   app uses only the free Maps Embed API. Fill it with the Builder tool in About. */
+const BAKED_IN = /*BAKED_START*/{"vallejo":{"lat":37.79855,"lng":-122.41513,"exact":false,"pano":"-_lrV-xMu0n6x2moYBnuzA","heading":262,"pitch":20,"fov":90,"tuned":true},"lumberbaron":{"lat":39.76785,"lng":-105.0179,"exact":false,"pano":"YUkIuLFktn7uxQC71zvBdQ","heading":354,"pitch":0,"fov":75,"tuned":true},"baymiller":{"lat":39.11535,"lng":-84.52955,"exact":false,"pano":"sFoVqTbVqV8Jo38xZpvjdQ","heading":239,"pitch":15,"fov":90,"tuned":true},"butte":{"lat":46.01445,"lng":-112.55135,"exact":false,"pano":"bnd8eTnNMyVvXv9sYzRX8Q","heading":353,"pitch":3,"fov":75,"tuned":true},"hartford":{"lat":35.0224,"lng":-94.3805,"exact":false,"pano":"UFowhabnkEWe7l8-K7hCDA","heading":114,"pitch":-4,"fov":75,"tuned":true},"silo":{"lat":38.665,"lng":-97.305,"exact":false,"pano":"RO9HmW_PJG8v-3NuSejw8Q","heading":254,"pitch":1,"fov":75,"tuned":true},"eudora":{"lat":38.9426,"lng":-95.0985,"exact":false,"pano":"WGXn6cYxYeTGIgPjixy9rA","heading":89,"pitch":0,"fov":90,"tuned":true},"mazomanie":{"lat":43.177,"lng":-89.7955,"exact":false,"pano":"_zbFXCIYclqYK0CvijzvPQ","heading":36,"pitch":12,"fov":75,"tuned":true},"doble":{"lat":42.381,"lng":-71.1185,"exact":false,"pano":"oCrUhUBAciI5yDG8iEVF0g","heading":307,"pitch":5,"fov":90,"tuned":true},"pumphouse":{"lat":38.3058,"lng":-77.4567,"exact":false,"pano":"4yG-NhVjfIJipwPb2GAmZg","heading":71,"pitch":1,"fov":75,"tuned":true},"brookline":{"lat":42.3407,"lng":-71.1205,"exact":false,"pano":"M5qv-nC9iPyBDzlqyVeFdg","heading":316,"pitch":10,"fov":90,"tuned":true},"saginaw":{"lat":43.4205,"lng":-83.9725,"exact":false,"pano":"dqKxtiM-7yvP6eU8a8fa3A","heading":301,"pitch":-4,"fov":75,"tuned":true},"ellsworth":{"lat":40.4545,"lng":-79.9298,"exact":false,"pano":"ucXSQMwgvOLWdcuS_5mJtw","heading":2,"pitch":-4,"fov":75,"tuned":true},"deertrail":{"lat":39.6153,"lng":-104.043,"exact":false,"pano":"RUIi3BUe2dVMAKO1NoiwYg","heading":72,"pitch":0,"fov":75,"tuned":true},"silo-il":{"lat":39.13,"lng":-89.493,"exact":false,"pano":"dP6cTAOf9YJ26KG9gqh8EQ","heading":216,"pitch":0,"fov":75,"tuned":true},"pennscave":{"lat":40.8823,"lng":-77.6145,"exact":false,"pano":"CIHM0ogKEICAgIDatdOWaA","ugc":true,"embedSrc":"https://www.google.com/maps/embed?pb=!4v1794006403147!6m8!1m7!1sCAoSFkNJSE0wb2dLRUlDQWdJRGF0ZE9XYUE.!2m2!1d40.88247544495609!2d-77.6101508990738!3f297.6887962905466!4f1.814235921477092!5f0.7820865974627469","heading":298,"pitch":2,"fov":75,"tuned":true},"goshen":{"lat":41.58,"lng":-85.834,"exact":false,"pano":"yTRnVQoxMQQpKleW9KJdrQ","ugc":false,"heading":243,"pitch":5,"fov":75,"tuned":true},"ashland":{"lat":46.5895,"lng":-90.889,"exact":false,"pano":"gvu1DO2DdHtXygEK5Aj1dA","ugc":false,"heading":113,"pitch":1,"fov":75,"tuned":true},"gwinn":{"lat":46.2815,"lng":-87.441,"exact":false,"pano":"zWrkOxSUrZLInf1UPQTfxQ","ugc":false,"heading":70,"pitch":-9,"fov":89,"tuned":true},"traincar":{"lat":47.064,"lng":-124.162,"exact":false,"pano":"yBcML8tlBI1kCIE02n1hqQ","ugc":false,"heading":223,"pitch":-3,"fov":38,"tuned":true},"odessa-hotel":{"lat":47.3325,"lng":-118.6895,"exact":false,"pano":"7AMGpYrnZBTVRRNCfVAOyw","ugc":false,"heading":178,"pitch":0,"fov":75,"tuned":true},"odessa-silo":{"lat":47.36,"lng":-118.72,"exact":false,"pano":"isZ2twnPVFjH-caaLk0EOw","ugc":false,"heading":87,"pitch":-1,"fov":15,"tuned":true},"lansford":{"lat":40.832,"lng":-75.881,"exact":false,"pano":"QzBOg3HYexh_KK3xy1uqbQ","ugc":false,"heading":196,"pitch":30,"fov":90,"tuned":true},"roy-bank":{"lat":47.3315,"lng":-108.9595,"exact":false,"pano":"NSL_IdLk01VkztYF368ftQ","ugc":false,"heading":189,"pitch":-2,"fov":75,"tuned":true},"perrysburg-jail":{"lat":41.5555,"lng":-83.629,"exact":false,"pano":"6NqHgdPH4Q9DFgtbTqfSVA","ugc":false,"heading":100,"pitch":11,"fov":75,"tuned":true},"tionesta":{"lat":41.493,"lng":-79.456,"exact":false,"pano":"UW4mtjVm-Bck5HKJ_QXf2g","ugc":false,"heading":270,"pitch":0,"fov":70,"tuned":true},"fortpierre":{"lat":44.43,"lng":-100.42,"exact":false,"pano":"Pa0BXQ4lI4sCv0dXv3LzAQ","ugc":false,"heading":29,"pitch":-4,"fov":26,"tuned":true},"lenox":{"lat":42.348,"lng":-73.293,"exact":false,"pano":"zwse2ECCiAdAnRrjxNhbrA","ugc":false,"heading":62,"pitch":-3,"fov":38,"tuned":true},"aboite":{"lat":41.0255,"lng":-85.312,"exact":false,"pano":"-ATz9AwY328-ZICEVozJ8g","ugc":false,"heading":31,"pitch":4,"fov":75,"tuned":true},"auburn-bank":{"lat":40.3925,"lng":-95.841,"exact":false,"pano":"nZ4HyaVtkrFZmlfBdM-3rw","ugc":false,"heading":119,"pitch":8,"fov":75,"tuned":true},"danville":{"lat":40.125,"lng":-87.629,"exact":false,"pano":"gIJBdrU0MlbMcNaQ_BTtOg","ugc":false,"heading":296,"pitch":4,"fov":75,"tuned":true},"britt":{"lat":43.1,"lng":-93.8,"exact":false,"pano":"lTVQJfGFXKUDvn_bUn8AfA","ugc":false,"heading":351,"pitch":5,"fov":75,"tuned":true}}/*BAKED_END*/;
+let BAKED_LOCAL={}; try{BAKED_LOCAL=JSON.parse(localStorage.getItem("arc-baked")||"{}");}catch(e){}
+let BAKED = {...BAKED_IN,...BAKED_LOCAL};
+function applyBaked(){PROPS.forEach(p=>{const b=BAKED[p.id]; if(b&&typeof b.lat==="number"){p.lat=b.lat;p.lng=b.lng;
+  p.city=nearest(p,CITIES);
+  if(b.uni){p.uni={n:b.uni.n,la:b.uni.la,ln:b.uni.ln,m:miles(p.lat,p.lng,b.uni.la,b.uni.ln)};} else p.uni=nearest(p,UNIS);}});}
+applyBaked();
+const hasNoStreetView=p=>BAKED[p.id]&&BAKED[p.id].pano===null;
+
+/* ---- Builder tool: uses Maps JavaScript API + Geocoding API, only for new properties ---- */
+let GM=null, gmPromise=null, gmErr=null;
+const GM_HELP={
+  ApiTargetBlockedMapError:"Your key isn't allowed to use the Maps JavaScript API. In Google Cloud → Keys & Credentials → your key → API restrictions, tick Maps JavaScript API (and Geocoding API), then Save. Wait 5 minutes and reload.",
+  ApiNotActivatedMapError:"The Maps JavaScript API isn't enabled for this project. Enable it in Google Cloud → APIs & Services, then reload.",
+  RefererNotAllowedMapError:"Your key is limited to certain websites. In Google Cloud → your key → Application restrictions, choose None (for now), Save, wait 5 minutes and reload.",
+  InvalidKeyMapError:"Google says the key is invalid. Double-check it in About.",
+  BillingNotEnabledMapError:"Billing isn't turned on for this project. Check Google Cloud → Billing.",
+  ExpiredKeyMapError:"Google says the key has expired.",
+  auth:"Google rejected the key for the Maps JavaScript API. Check that the API is enabled and ticked under the key's API restrictions."
+};
+function gmExplain(){return gmErr?(GM_HELP[gmErr]||("Google error: "+gmErr)):null;}
+function showGmError(){
+  const t=gmExplain(); if(!t) return;
+  const log=document.getElementById("bLog"); if(log&&!log.querySelector(".gmerr")){const li=document.createElement("li");li.className="gmerr";li.innerHTML="❌ <strong>"+esc(gmErr)+"</strong>: "+esc(t);log.appendChild(li);}
+  const tm=document.getElementById("tMsg"); if(tm) tm.innerHTML="❌ <strong>"+esc(gmErr)+"</strong>: "+esc(t)+" <br>Meanwhile, use the free Google Maps link option below.";
+  const b=document.getElementById("bRun"); if(b) b.disabled=false;
+}
+["error","warn"].forEach(k=>{const orig=console[k].bind(console);
+  console[k]=(...a)=>{try{const m=String(a.join(" ")).match(/([A-Za-z]+MapError)/); if(m&&!gmErr){gmErr=m[1];showGmError();}}catch(e){} orig(...a);};});
+window.gm_authFailure=()=>{if(!gmErr) gmErr="auth"; showGmError();};
+function withTimeout(pr,ms){return Promise.race([pr,new Promise((_,rej)=>setTimeout(()=>{const e=new Error(gmExplain()||"Google didn't answer. The Maps JavaScript API is probably blocked for this key. Check that it's enabled and ticked under the key's API restrictions.");e.timeout=true;rej(e);},ms))]);}
+function loadGM(){
+  if(GM) return Promise.resolve(GM);
+  if(gmPromise) return gmPromise;
+  gmPromise=new Promise((res,rej)=>{
+    window.__gmReady=()=>{GM=google.maps;res(GM);};
+    const s=document.createElement("script");
+    s.src=`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=weekly&libraries=geometry&callback=__gmReady`;
+    s.async=true; s.onerror=()=>{gmPromise=null;rej(new Error("Couldn't load the Maps JavaScript API."));};
+    document.head.appendChild(s);
+  });
+  return gmPromise;
+}
+async function geocode(G,address){
+  try{const r=await withTimeout(new G.Geocoder().geocode({address}),15000); const g=r.results[0].geometry;
+    const loc=g.location; loc._approx=(g.location_type==="APPROXIMATE"); return loc;}
+  catch(e){ if(e.timeout) throw e; if(String(e).includes("REQUEST_DENIED")) throw new Error("Geocoding API is not enabled or not allowed on this key. Tick it under the key's API restrictions."); return null; }
+}
+async function lockOne(G,p){
+  let loc=await geocode(G,p.q||p.addr), exact=!!loc&&!loc._approx;
+  if(!loc){ if(typeof p.lat!=="number") return {failed:true}; loc=new G.LatLng(p.lat,p.lng); }
+  const rec={lat:+loc.lat().toFixed(6),lng:+loc.lng().toFixed(6),pano:null,heading:0,exact};
+  if(p.uniName){const u=await geocode(G,p.uniName); if(u) rec.uni={n:p.uniName,la:+u.lat().toFixed(6),ln:+u.lng().toFixed(6)};}
+  const sv=new G.StreetViewService();
+  for(const radius of [50,120,300]){
+    try{const req={location:loc,radius,preference:G.StreetViewPreference.NEAREST};
+      if(G.StreetViewSource.GOOGLE) req.sources=[G.StreetViewSource.GOOGLE]; else req.source=G.StreetViewSource.OUTDOOR;
+      const {data}=await withTimeout(sv.getPanorama(req),15000);
+      rec.pano=data.location.pano;
+      rec.heading=Math.round((G.geometry.spherical.computeHeading(data.location.latLng,loc)+360)%360);
+      break;
+    }catch(e){ if(e.timeout) throw e; }
+  }
+  return rec;
+}
+async function runBuilder(){
+  const log=document.getElementById("bLog"), btn=document.getElementById("bRun");
+  const redo=document.getElementById("bRedo").checked;
+  const todo=PROPS.filter(p=>!(BAKED[p.id]&&BAKED[p.id].tuned)&&(redo||!BAKED[p.id]));
+  log.innerHTML="";
+  const line=t=>{const li=document.createElement("li");li.innerHTML=t;log.appendChild(li);return li;};
+  const skipped=PROPS.length-todo.length;
+  if(skipped) line(`⏭️ ${skipped} already locked in, skipped`);
+  if(!todo.length){line("Nothing new to look up.");return;}
+  btn.disabled=true;
+  let G;
+  try{G=await withTimeout(loadGM(),15000);}catch(e){line("❌ "+esc(e.message));btn.disabled=false;return;}
+  await new Promise(r=>setTimeout(r,1500));
+  if(gmErr){showGmError();btn.disabled=false;return;}
+  for(const p of todo){
+    const li=line(`⏳ ${esc(p.name)}…`);
+    try{const r=await lockOne(G,p);
+      if(r.failed){li.innerHTML=`⚠️ ${esc(p.name)}: Google couldn't find that address. Check it and try again.`;continue;}
+      BAKED_LOCAL[p.id]=r; BAKED[p.id]=r;
+      li.innerHTML=r.pano?`✅ ${esc(p.name)}: Street View found, camera facing ${r.heading}°${r.exact?"":" ⚠️ Google only matched the general area, so check this one with Fine-tune"}`
+                        :`➖ ${esc(p.name)}: no Street View here, will show Satellite`;
+    }catch(e){li.innerHTML="❌ "+esc(e.message);break;}
+  }
+  try{localStorage.setItem("arc-baked",JSON.stringify(BAKED_LOCAL));}catch(e){}
+  applyBaked(); btn.disabled=false; render(); builderStatus();
+}
+
+
+/* ---- Fine-tune: aim the camera yourself and save the exact view ---- */
+let tunePano=null, tuneId=null;
+function fillTuneSelect(){
+  const sel=document.getElementById("tSel"); const cur=sel.value;
+  sel.innerHTML=PROPS.map(p=>{const b=BAKED[p.id];
+    const tag=b&&b.tuned?"🎯 ":b&&b.pano?"✅ ":b&&b.pano===null?"➖ ":"⏳ ";
+    return `<option value="${p.id}">${tag}${esc(p.name)} (${esc(p.addr.split(",").slice(-2).join(",").trim())})</option>`;}).join("");
+  if(cur) sel.value=cur;
+}
+async function openTune(){
+  const id=document.getElementById("tSel").value, p=PROPS.find(x=>x.id===id); if(!p) return;
+  tuneId=id;
+  const box=document.getElementById("tune"), msg=document.getElementById("tMsg");
+  document.getElementById("tTitle").textContent=p.name; document.getElementById("tAddr").textContent=p.addr;
+  box.classList.add("on"); msg.textContent="Loading Street View…";
+  let G; try{G=await withTimeout(loadGM(),15000);}catch(e){msg.textContent="❌ "+e.message;return;}
+  if(gmErr){showGmError();return;}
+  const b=BAKED[id];
+  const start=b&&b.pano?{pano:b.pano,pov:{heading:b.heading,pitch:b.pitch??8},zoom:b.fov?Math.log2(180/b.fov):0}
+                       :{position:{lat:(b&&b.lat)||p.lat,lng:(b&&b.lng)||p.lng},pov:{heading:(b&&b.heading)||0,pitch:8},zoom:0};
+  const div=document.getElementById("tPano"); div.innerHTML="";
+  tunePano=new G.StreetViewPanorama(div,{...start,addressControl:true,linksControl:true,clickToGo:true,
+    motionTracking:false,motionTrackingControl:false,fullscreenControl:false,showRoadLabels:true});
+  msg.textContent="Drag to turn. Click the arrows on the road, or double-click, to move. Line up the building, then click Save this view.";
+}
+function saveTune(){
+  if(!tunePano||!tuneId) return;
+  const p=PROPS.find(x=>x.id===tuneId), pano=tunePano.getPano(), pov=tunePano.getPov(), z=tunePano.getZoom()||0;
+  if(!pano){document.getElementById("tMsg").textContent="No Street View photo is loaded here yet.";return;}
+  const old=BAKED[tuneId]||{lat:p.lat,lng:p.lng,exact:false};
+  const rec={...old,pano,heading:Math.round(((pov.heading%360)+360)%360),pitch:Math.round(pov.pitch),
+             fov:Math.max(15,Math.min(100,Math.round(180/Math.pow(2,z)))),tuned:true};
+  setBaked(tuneId,rec); closeTune();
+}
+function noStreetView(){
+  if(!tuneId) return; const p=PROPS.find(x=>x.id===tuneId);
+  setBaked(tuneId,{...(BAKED[tuneId]||{lat:p.lat,lng:p.lng,exact:false}),pano:null,heading:0,tuned:true}); closeTune();
+}
+function resetTune(){
+  if(!tuneId) return; delete BAKED_LOCAL[tuneId];
+  if(BAKED_IN[tuneId]&&!BAKED_IN[tuneId].tuned) BAKED[tuneId]=BAKED_IN[tuneId]; else delete BAKED[tuneId];
+  try{localStorage.setItem("arc-baked",JSON.stringify(BAKED_LOCAL));}catch(e){}
+  closeTune(); render(); builderStatus();
+}
+function setBaked(id,rec){
+  BAKED_LOCAL[id]=rec; BAKED[id]=rec;
+  try{localStorage.setItem("arc-baked",JSON.stringify(BAKED_LOCAL));}catch(e){}
+  applyBaked(); render(); builderStatus();
+  document.getElementById("tDone").textContent=`✓ Saved view for ${PROPS.find(x=>x.id===id).name}. Click Download updated app when you're finished.`;
+}
+function closeTune(){document.getElementById("tune").classList.remove("on"); document.getElementById("tPano").innerHTML=""; tunePano=null;}
+
+/* ---- Fix a view from a Google Maps Street View link (free) ---- */
+function parseSvLink(url){
+  url=String(url||"").trim();
+  // Google Maps "Share → Embed a map" HTML (works for every photo, incl. user-uploaded)
+  if(/<iframe|\/maps\/embed\?pb=/.test(url)){
+    const m=url.match(/src=["']([^"']+)["']/); let src=(m?m[1]:url).replace(/&amp;/g,"&");
+    if(!/^https:\/\/www\.google\.com\/maps\/embed\?pb=[^"'<>\s]+$/.test(src)) return {err:"That embed code doesn't look like a Google Maps embed. Copy it again from Share → Embed a map → COPY HTML."};
+    return {embedSrc:src};
+  }
+  try{url=decodeURIComponent(url);}catch(e){}
+  if(/goo\.gl|maps\.app/.test(url)) return {err:"That's a short Share link. Copy the long link from your browser's address bar instead."};
+  const pano=(url.match(/!1s([^!]+)!2e(\d+)/)||[]);
+  if(!pano[1]) return {err:"That link doesn't contain a Street View photo. Get into Street View first (the yellow person), then copy the address-bar link."};
+  const ugc=pano[2]!=="0";
+  const num=(re,d)=>{const m=url.match(re);return m?parseFloat(m[1]):d;};
+  const heading=num(/,(-?\d+(?:\.\d+)?)h[,/]/,0), t=num(/,(\d+(?:\.\d+)?)t[,/]/,90), y=num(/,(\d+(?:\.\d+)?)y[,/]/,80);
+  return {pano:pano[1],ugc,embedSrc:undefined,heading:Math.round(((heading%360)+360)%360),pitch:Math.max(-60,Math.min(60,Math.round(t-90))),fov:Math.max(15,Math.min(100,Math.round(y)))};
+}
+function saveFromLink(){
+  const id=document.getElementById("tSel").value, p=PROPS.find(x=>x.id===id), msg=document.getElementById("lMsg");
+  const r=parseSvLink(document.getElementById("lUrl").value);
+  if(r.err){msg.textContent="⚠️ "+r.err;return;}
+  const old=BAKED[id]||{lat:p.lat,lng:p.lng,exact:false};
+  const rec={...old,...r,tuned:true}; if(r.embedSrc&&!rec.pano) rec.pano="embed";
+  setBaked(id,rec);
+  document.getElementById("lUrl").value="";
+  msg.textContent=r.ugc
+    ? `✓ Saved for ${p.name}. That's a user-uploaded photo. If the card shows a black box, open it in Google Maps again, click Share → Embed a map → COPY HTML, and paste that here instead.`
+    : `✓ Saved for ${p.name}. Check it on the Vote tab.`;
+}
+function updateGmLink(){
+  const p=PROPS.find(x=>x.id===document.getElementById("tSel").value); if(!p) return;
+  document.getElementById("lOpen").href=`https://www.google.com/maps/search/?api=1&query=${Q(p)}`;
+}
+
+/* ---- Add a property ---- */
+function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)||"property";}
+function siteFrom(url){try{const h=new URL(url).hostname.replace(/^www\./,"");
+  const known={"zillow.com":"Zillow","redfin.com":"Redfin","realtor.com":"Realtor.com","loopnet.com":"LoopNet","crexi.com":"Crexi","trulia.com":"Trulia","homes.com":"Homes.com"};
+  return known[h]||h;}catch(e){return "listing site";}}
+function addProperty(e){
+  e.preventDefault();
+  const f=e.target, v=n=>f.elements[n].value.trim();
+  const msg=document.getElementById("addMsg");
+  let link=v("link"); try{const u=new URL(link); ["utm_campaign","utm_medium","utm_source"].forEach(k=>u.searchParams.delete(k)); link=u.toString();}
+  catch(err){msg.textContent="⚠️ The listing link should start with https://";return;}
+  let id=slug(v("name")); while(PROPS.some(p=>p.id===id)) id+="-2";
+  const p={id,name:v("name"),kind:v("kind"),price:v("price")||"Price not listed",addr:v("addr"),blurb:v("blurb"),
+           link,site:siteFrom(link),uniName:v("uni")||undefined,added:true};
+  if(v("source")) p.source=v("source");
+  PROPS.push(p); ADDED_LOCAL.push(p);
+  state.r[id]=1500; state.w[id]=0; state.l[id]=0; save();
+  try{localStorage.setItem("arc-added",JSON.stringify(ADDED_LOCAL));}catch(err){}
+  f.reset(); msg.textContent=`✓ Added "${p.name}". Run Lock in locations below to add its Street View.`;
+  renderAdded(); builderStatus();
+}
+function removeAdded(id){
+  ADDED_LOCAL=ADDED_LOCAL.filter(p=>p.id!==id);
+  const i=PROPS.findIndex(p=>p.id===id&&p.added&&!ADDED_IN.some(x=>x.id===id)); if(i>=0) PROPS.splice(i,1);
+  delete BAKED_LOCAL[id]; if(!(id in BAKED_IN)) delete BAKED[id];
+  try{localStorage.setItem("arc-added",JSON.stringify(ADDED_LOCAL));localStorage.setItem("arc-baked",JSON.stringify(BAKED_LOCAL));}catch(e){}
+  if(pair.some(p=>p.id===id)) nextPair();
+  renderAdded(); builderStatus();
+}
+function renderAdded(){
+  const el=document.getElementById("addedList");
+  el.innerHTML=ADDED_LOCAL.length?"<strong>Added in this browser:</strong><ul>"+ADDED_LOCAL.map(p=>
+    `<li>${esc(p.name)} <button class="btn" style="padding:2px 8px;font-size:11px" data-rm="${p.id}">Remove</button></li>`).join("")+"</ul>":"";
+  el.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>removeAdded(b.dataset.rm));
+}
+function builderStatus(){
+  if(document.getElementById("tSel")){fillTuneSelect();updateGmLink();}
+  const unsaved=(JSON.stringify(CONFIG_LOCAL)!=="{}"&&Object.keys(CONFIG_LOCAL).some(k=>CONFIG_LOCAL[k]!==CONFIG_IN[k])?1:0)+ADDED_LOCAL.length+Object.keys(BAKED_LOCAL).filter(k=>!(k in BAKED_IN)||JSON.stringify(BAKED_IN[k])!==JSON.stringify(BAKED_LOCAL[k])).length;
+  const missing=PROPS.filter(p=>!BAKED[p.id]).length;
+  document.getElementById("bStatus").textContent=
+    `${PROPS.length} properties · ${PROPS.length-missing} locked in · ${missing} waiting` +
+    (unsaved?` · Changes not yet saved in the file. Click Download updated app.`:` · Everything is saved in this file.`);
+}
+
+/* ---- Download updated app: writes a new copy of this file with everything built in ---- */
+function downloadApp(){
+  const allAdded=[...ADDED_IN,...ADDED_LOCAL.filter(p=>!ADDED_IN.some(x=>x.id===p.id))];
+  const json=o=>JSON.stringify(o).replace(/</g,"\\u003c");
+  const doc=document.documentElement.cloneNode(true);
+  doc.querySelectorAll('script[src*="googleapis"],script[src*="gstatic"],head style:not([data-own]),head link[href*="gstatic"],head link[href*="googleapis.com/maps"]').forEach(n=>n.remove());
+  ["left","right","rows","bLog","mapbtns","mapnote","addedList","addMsg","bStatus"].forEach(i=>{const n=doc.querySelector("#"+i); if(n) n.innerHTML="";});
+  const m=doc.querySelector("#map"); if(m) m.removeAttribute("src");
+  doc.querySelector("#modal").classList.remove("on"); doc.querySelector("#tune").classList.remove("on");
+  ["tPano","tMsg","tDone","tAddr","lMsg"].forEach(i=>{const n=doc.querySelector("#"+i); if(n) n.innerHTML="";});
+  doc.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="vote"));
+  doc.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.view==="vote"));
+  doc.querySelector("#adminTab").setAttribute("hidden","");
+  ["revMsg","fsStatus","sugMsg","seStatus"].forEach(i=>{const n=doc.querySelector("#"+i); if(n) n.innerHTML="";});
+  const s=[...doc.querySelectorAll("script")].find(n=>!n.src);
+  const mark=n=>["/*"+n+"_START*/","/*"+n+"_END*/"];
+  const put=(txt,n,val)=>{const [a,b]=mark(n);const i=txt.indexOf(a),j=txt.indexOf(b);return txt.slice(0,i+a.length)+val+txt.slice(j);};
+  let code=s.textContent;
+  code=put(code,"ADDED",json(allAdded));
+  code=put(code,"BAKED",json(BAKED));
+  code=put(code,"CONFIG",json(CONFIG));
+  s.textContent=code;
+  const html="<!DOCTYPE html>\n"+doc.outerHTML;
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));
+  a.download="adaptive-reuse-corner.html"; document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
+  document.getElementById("dlMsg").textContent="✓ Downloaded. Replace your old file with this one. That's the copy to share or put online.";
+}
+
+function choose(i){const w=pair[i],l=pair[1-i];if(!w||!l)return;vote(w.id,l.id);}
+
+function renderRanks(){
+  const rows=document.getElementById("rows");
+  if(!state.votes){rows.innerHTML=`<div class="empty">No votes yet. Head to the <strong>Vote</strong> tab and start picking!</div>`;return;}
+  const list=PROPS.slice().sort((a,b)=>state.r[b.id]-state.r[a.id]);
+  const hi=state.r[list[0].id], lo=state.r[list[list.length-1].id];
+  rows.innerHTML=list.map((p,i)=>{
+    const r=state.r[p.id], pct=hi===lo?50:Math.round(15+85*(r-lo)/(hi-lo));
+    return `<div class="row"><div class="rank">${i+1}</div>
+      <div><div class="nm">${esc(p.name)}</div>
+        <div class="meta">${esc(p.kind)} · ${esc(p.addr.split(",").slice(-2).join(",").trim())} · ${esc(p.price)} · <a href="${p.link}" target="_blank" rel="noopener">listing</a></div>
+        <div class="bar"><i style="width:${pct}%"></i></div></div>
+      <div class="score"><b>${Math.round(r)}</b><br>${state.w[p.id]}W–${state.l[p.id]}L</div></div>`;
+  }).join("");
+}
+
+/* ================== MAP ================== */
+function openMap(p){
+  document.getElementById("modal").classList.add("on");
+  document.getElementById("mtitle").textContent=p.name;
+  const opts=[
+    {k:"area", t:"📍 Neighborhood", src:()=>mapSrc(p,13), note:`${esc(p.addr)}`}];
+  if(uniOK(p)) opts.push(
+    {k:"uni",  t:`🎓 To ${p.uni.n}`, src:()=>dirSrc(p,`${p.uni.la},${p.uni.ln}`),
+       note:`${esc(p.uni.n)}: about ${fmt(p.uni.m)} in a straight line · <a href="${dirLink(p,p.uni.n)}" target="_blank" rel="noopener">Directions in Google Maps ↗</a>`});
+  if(cityOK(p)) opts.push(
+    {k:"city", t:`🏙️ To ${p.city.n}`, src:()=>dirSrc(p,`${p.city.la},${p.city.ln}`),
+       note:`${esc(p.city.n)}: about ${fmt(p.city.m)} in a straight line · <a href="${dirLink(p,p.city.n)}" target="_blank" rel="noopener">Directions in Google Maps ↗</a>`});
+  const btns=document.getElementById("mapbtns"), frame=document.getElementById("map"), note=document.getElementById("mapnote");
+  btns.innerHTML=opts.map(o=>`<button class="btn" data-k="${o.k}">${esc(o.t)}</button>`).join("")
+    +(p.uni&&!uniOK(p)?`<button class="btn" disabled style="opacity:.55;cursor:default">🎓 University: N/A</button>`:"")
+    +(p.city&&!cityOK(p)?`<button class="btn" disabled style="opacity:.55;cursor:default">🏙️ Big city: N/A</button>`:"");
+  const pick=k=>{const o=opts.find(x=>x.k===k); frame.src=o.src(); note.innerHTML=o.note;
+    btns.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.k===k));};
+  btns.querySelectorAll("button[data-k]").forEach(b=>b.onclick=()=>pick(b.dataset.k));
+  pick(opts.some(o=>o.k==="uni")?"uni":opts.some(o=>o.k==="city")?"city":"area");
+  if(!uniOK(p)&&!cityOK(p)&&p.uni) note.innerHTML+=` · No university or big city within ${NEAR_LIMIT} miles`;
+}
+function closeMap(){document.getElementById("modal").classList.remove("on"); document.getElementById("map").src="about:blank";}
+document.getElementById("mclose").onclick=closeMap;
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeMap();};
+
+
+/* ================== CONFIG + ADMIN PAGE + SUGGESTIONS ================== */
+const CONFIG_IN = /*CONFIG_START*/{}/*CONFIG_END*/;
+let CONFIG_LOCAL={}; try{CONFIG_LOCAL=JSON.parse(localStorage.getItem("arc-config")||"{}");}catch(e){}
+let CONFIG={...CONFIG_IN,...CONFIG_LOCAL};
+function saveConfig(k,v){CONFIG_LOCAL[k]=v;CONFIG[k]=v;try{localStorage.setItem("arc-config",JSON.stringify(CONFIG_LOCAL));}catch(e){}}
+
+const isAdmin=()=>location.hash==="#builder";
+function syncAdmin(){
+  const t=document.getElementById("adminTab"); t.hidden=!isAdmin();
+  if(isAdmin()) showView("admin");
+  else if(document.getElementById("admin").classList.contains("on")) showView("vote");
+}
+window.addEventListener("hashchange",syncAdmin);
+
+function fsStatus(){document.getElementById("fsIn").value=CONFIG.formspree||"";
+  document.getElementById("fsStatus").textContent=CONFIG.formspree?"✓ Suggestions are on":"Not set up. Visitors will see \"Suggestions open soon.\"";}
+document.getElementById("fsSave").onclick=()=>{
+  const v=document.getElementById("fsIn").value.trim(), m=v.match(/formspree\.io\/f\/([A-Za-z0-9]+)/);
+  const id=m?m[1]:(/^[A-Za-z0-9]+$/.test(v)?v:"");
+  if(v&&!id){document.getElementById("fsStatus").textContent="⚠️ That doesn't look like a Formspree form ID.";return;}
+  saveConfig("formspree",id); fsStatus(); builderStatus();
+};
+
+const encMail=s=>btoa(s.split("").reverse().join(""));
+const decMail=s=>{try{return atob(s).split("").reverse().join("");}catch(e){return "";}};
+function seStatus(){const m=CONFIG.suggestEmail?decMail(CONFIG.suggestEmail):"";
+  document.getElementById("seIn").value=m;
+  document.getElementById("seStatus").textContent=m?"✓ Suggestions go to "+m:"Not set";}
+document.getElementById("seSave").onclick=()=>{
+  const v=document.getElementById("seIn").value.trim();
+  if(v&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){document.getElementById("seStatus").textContent="⚠️ That doesn't look like an email address.";return;}
+  saveConfig("suggestEmail",v?encMail(v):""); seStatus(); builderStatus();
+};
+
+const toCode=o=>"ARC1:"+btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+const fromCode=s=>JSON.parse(decodeURIComponent(escape(atob(String(s).trim().replace(/^ARC1:/,"")))));
+
+document.getElementById("sugForm").onsubmit=async e=>{
+  e.preventDefault();
+  const f=e.target, v=n=>f.elements[n].value.trim(), msg=document.getElementById("sugMsg"), btn=document.getElementById("sugBtn");
+  if(v("_gotcha")) return;
+  const s={link:v("link"),addr:v("addr"),kind:v("kind"),price:v("price"),why:v("why"),from:v("name")};
+  if(!CONFIG.formspree){
+    const to=CONFIG.suggestEmail?decMail(CONFIG.suggestEmail):"";
+    if(!to){msg.textContent="Suggestions open soon. Check back later!";return;}
+    const subject="Adaptive Reuse Corner suggestion: "+s.kind+", "+s.addr;
+    const body=["Listing link: "+s.link,"Address: "+s.addr,"Building type: "+s.kind,"Price: "+(s.price||"(not given)"),
+      "Why: "+(s.why||"(not given)"),"Suggested by: "+(s.from||"(anonymous)"),"",
+      "Approval code (for the site owner):",toCode(s)].join("\n");
+    const gmail="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(to)+"&su="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+    const mailto="mailto:"+encodeURIComponent(to)+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+    msg.innerHTML=`Almost done! Open your email, then press <strong>Send</strong>:<br>
+      <a class="btn" href="${gmail}" target="_blank" rel="noopener" style="display:inline-block;margin:6px 6px 0 0">Send with Gmail ↗</a>
+      <a class="btn" href="${mailto}" style="display:inline-block;margin-top:6px">Send with my email app</a>`;
+    return;
+  }
+  const fd=new FormData();
+  fd.append("_subject","New Adaptive Reuse Corner suggestion: "+s.kind+", "+s.addr);
+  fd.append("Listing link",s.link); fd.append("Address",s.addr); fd.append("Building type",s.kind);
+  fd.append("Price",s.price||"(not given)"); fd.append("Why",s.why||"(not given)");
+  fd.append("Suggested by",s.from||"(anonymous)"); if(v("email")) fd.append("email",v("email"));
+  fd.append("Approval code (paste into your #builder page)",toCode(s));
+  btn.disabled=true; msg.textContent="Sending…";
+  try{
+    const r=await fetch("https://formspree.io/f/"+CONFIG.formspree,{method:"POST",body:fd,headers:{Accept:"application/json"}});
+    if(r.ok){msg.textContent="✓ Thanks! Your suggestion was sent for review."; f.reset();}
+    else if(r.status===429){msg.textContent="Lots of suggestions right now. Please try again in a minute.";}
+    else{const d=await r.json().catch(()=>({}));msg.textContent="⚠️ "+((d.errors||[]).map(x=>x.message).join(", ")||"Something went wrong. Please try again.");}
+  }catch(err){msg.textContent="⚠️ Couldn't send. Check your connection and try again.";}
+  btn.disabled=false;
+};
+document.getElementById("footSuggest").onclick=e=>{e.preventDefault();showView("about");document.getElementById("suggest").scrollIntoView({behavior:"smooth"});};
+
+document.getElementById("revBtn").onclick=()=>{
+  const msg=document.getElementById("revMsg"); let s;
+  try{s=fromCode(document.getElementById("revIn").value);}catch(e){msg.textContent="⚠️ That code didn't work. Copy the whole line starting with ARC1:";return;}
+  const f=document.getElementById("addForm");
+  f.elements.kind.value=s.kind||""; f.elements.addr.value=s.addr||""; f.elements.price.value=s.price||"";
+  f.elements.link.value=s.link||""; f.elements.blurb.value=s.why||""; f.elements.name.value="";
+  msg.textContent=`✓ Loaded${s.from?" (from "+s.from+")":""}. Give it a name, polish the description, then click Add property.`;
+  document.getElementById("addbox").scrollIntoView({behavior:"smooth"}); f.elements.name.focus();
+};
+
+/* ================== NAV + KEYS ================== */
+function showView(name){
+  document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x.dataset.view===name));
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===name));
+  if(name==="rank") renderRanks();
+}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>showView(t.dataset.view));
+
+/* ---- API key settings ---- */
+function keyStatus(){document.getElementById("keyStatus").textContent=API_KEY?"✓ Street View is on":"No key saved. Satellite and map only.";
+  document.getElementById("keyIn").value=API_KEY;}
+document.getElementById("keySave").onclick=()=>{const v=document.getElementById("keyIn").value.trim(); API_KEY=v||BUILT_IN_KEY;
+  try{v&&v!==BUILT_IN_KEY?localStorage.setItem("arc-gkey",v):localStorage.removeItem("arc-gkey");}catch(e){}
+  keyStatus(); render();};
+document.getElementById("keyClear").onclick=()=>{API_KEY=BUILT_IN_KEY;try{localStorage.removeItem("arc-gkey");}catch(e){} keyStatus(); render();};
+keyStatus();
+document.getElementById("bRun").onclick=runBuilder;
+document.getElementById("dlBtn").onclick=downloadApp;
+document.getElementById("tOpen").onclick=openTune;
+document.getElementById("lSave").onclick=saveFromLink;
+document.getElementById("tSel").onchange=updateGmLink;
+document.getElementById("tSave").onclick=saveTune;
+document.getElementById("tNone").onclick=noStreetView;
+document.getElementById("tReset").onclick=resetTune;
+document.getElementById("tClose").onclick=closeTune;
+document.getElementById("addForm").onsubmit=addProperty;
+renderAdded(); builderStatus();
+document.getElementById("skip").onclick=nextPair;
+document.getElementById("reset").onclick=e=>{
+  const b=e.currentTarget;
+  if(b.dataset.armed){state=fresh();save();renderRanks();nextPair();b.textContent="Reset my votes";delete b.dataset.armed;}
+  else{b.dataset.armed="1";b.textContent="Click again to confirm";setTimeout(()=>{b.textContent="Reset my votes";delete b.dataset.armed;},3000);}
+};
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("tune").classList.contains("on")){if(e.key==="Escape")closeTune();return;}
+  if(document.getElementById("modal").classList.contains("on")){if(e.key==="Escape")closeMap();return;}
+  if(!document.getElementById("vote").classList.contains("on"))return;
+  if(e.key==="ArrowLeft")choose(0); else if(e.key==="ArrowRight")choose(1); else if(e.key.toLowerCase()==="s")nextPair();
+});
+
+fsStatus(); seStatus(); builderStatus();
+nextPair();
+syncAdmin();
+</script>
+
+
+</body></html>
