@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Adaptive Reuse Corner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Roboto+Slab:wght@400;600;800&amp;family=Courier+Prime:wght@700&amp;display=swap" rel="stylesheet">
-<style data-own="">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto+Slab:wght@400;600;800&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+<style data-own>
   :root{
     --navy:#1f2f7a; --navy-dk:#141f55; --royal:#2b3fa0;
     --cream:#f6efdc; --paper:#fbf7ec; --ink:#1b1b1b;
@@ -209,7 +210,7 @@
   <button class="tab" role="tab" data-view="vote" aria-selected="true">Vote</button>
   <button class="tab" role="tab" data-view="rank" aria-selected="false">Your Rankings</button>
   <button class="tab" role="tab" data-view="about" aria-selected="false">About</button>
-  <button class="tab" role="tab" data-view="admin" aria-selected="false" id="adminTab" hidden="">🔧 Builder</button>
+  <button class="tab" role="tab" data-view="admin" aria-selected="false" id="adminTab" hidden>🔧 Builder</button>
 </nav>
 
 <main>
@@ -222,7 +223,7 @@
     </div>
     <div class="under">
       <button class="btn" id="skip">Skip this pair ⟳</button>
-      <span class="tally" id="tally">VOTES: 038</span>
+      <span class="tally" id="tally">VOTES: 0</span>
       <span class="hint">Keyboard: ← left · → right · S skip</span>
     </div>
   </section>
@@ -254,9 +255,9 @@
         <h3>📬 Suggest a property</h3>
         <p>Know an old church, school, mill or bank for sale that deserves a second life? Send it in. Suggestions are reviewed before they appear in the voting.</p>
         <form id="sugForm" class="addform">
-          <label class="wide">Listing link* <input name="link" type="url" required="" placeholder="https://www.zillow.com/homedetails/..."></label>
-          <label class="wide">Street address* <input name="addr" required="" placeholder="123 Elm St, Ithaca, NY 14850"></label>
-          <label>What kind of building?* <input name="kind" required="" placeholder="e.g. Former firehouse"></label>
+          <label class="wide">Listing link* <input name="link" type="url" required placeholder="https://www.zillow.com/homedetails/..."></label>
+          <label class="wide">Street address* <input name="addr" required placeholder="123 Elm St, Ithaca, NY 14850"></label>
+          <label>What kind of building?* <input name="kind" required placeholder="e.g. Former firehouse"></label>
           <label>Price <input name="price" placeholder="$450,000"></label>
           <label class="wide">Why is it a great reuse project? <textarea name="why" rows="3" placeholder="A sentence or two"></textarea></label>
           <label>Your name <small>(optional)</small><input name="name"></label>
@@ -294,18 +295,18 @@
           <li>Under <em>Keys &amp; Credentials</em>, create an API key and paste it below.</li>
         </ol>
         <input id="keyIn" placeholder="Paste your Google Maps Embed API key" autocomplete="off" spellcheck="false">
-        <div><button class="btn" id="keySave">Save key</button> <button class="btn" id="keyClear">Remove key</button> <span class="keystatus" id="keyStatus">✓ Street View is on</span></div>
+        <div><button class="btn" id="keySave">Save key</button> <button class="btn" id="keyClear">Remove key</button> <span class="keystatus" id="keyStatus"></span></div>
         <p style="font-size:13px">The key is saved only in this browser. Before you put the site online, restrict the key to your website's address in Google Cloud.</p>
       </div>
       <div class="keybox" id="addbox">
         <h3>➕ Add a property</h3>
         <form id="addForm" class="addform">
-          <label>Property name* <input name="name" required="" placeholder="e.g. Elm Street Firehouse"></label>
-          <label>Type of building* <input name="kind" required="" placeholder="e.g. Former firehouse"></label>
-          <label class="wide">Full street address* <input name="addr" required="" placeholder="123 Elm St, Ithaca, NY 14850"></label>
+          <label>Property name* <input name="name" required placeholder="e.g. Elm Street Firehouse"></label>
+          <label>Type of building* <input name="kind" required placeholder="e.g. Former firehouse"></label>
+          <label class="wide">Full street address* <input name="addr" required placeholder="123 Elm St, Ithaca, NY 14850"></label>
           <label>Price <input name="price" placeholder="$450,000"></label>
-          <label>Listing link* <input name="link" type="url" required="" placeholder="https://www.zillow.com/homedetails/..."></label>
-          <label class="wide">Short description* <textarea name="blurb" required="" rows="3" placeholder="Two or three sentences on the building and its reuse potential."></textarea></label>
+          <label>Listing link* <input name="link" type="url" required placeholder="https://www.zillow.com/homedetails/..."></label>
+          <label class="wide">Short description* <textarea name="blurb" required rows="3" placeholder="Two or three sentences on the building and its reuse potential."></textarea></label>
           <label>Nearby university <small>(optional, otherwise picked automatically)</small><input name="uni" placeholder="e.g. Cornell University"></label>
           <label>College Towns post <small>(optional)</small><input name="source" type="url" placeholder="https://www.collegetowns.org/p/..."></label>
           <div class="wide"><button class="btn" type="submit">Add property</button> <span id="addMsg" class="keystatus"></span></div>
@@ -322,11 +323,11 @@
         <ul id="bLog" style="font-size:14px"></ul>
         <h3 style="margin-top:16px">🎯 Fine-tune a view</h3>
         <p>If a Street View shows the wrong building or the wrong angle, pick the property, turn the camera to face it, and save. Saved views are marked 🎯 and are never changed by Lock in locations. (✅ locked in · ➖ satellite only · ⏳ not looked up yet)</p>
-        <select id="tSel" style="font:15px 'Roboto Slab',serif;padding:7px;border:3px solid var(--navy);max-width:100%"><option value="vallejo">🎯 The Russian Hill Mansion (San Francisco, CA 94133)</option><option value="lumberbaron">🎯 Lumber Baron Inn (Denver, CO 80211)</option><option value="baymiller">🎯 The Black Church (Cincinnati, OH 45214)</option><option value="butte">🎯 Copper Street Convent (Butte, MT 59701)</option><option value="hartford">🎯 Hazel Street Church (Hartford, AR 72938)</option><option value="silo">🎯 The Kansas Missile Silo (Carlton, KS 67448)</option><option value="eudora">🎯 Eudora Church House (Eudora, KS 66025)</option><option value="mazomanie">🎯 Mazomanie White Church (Mazomanie, WI 53560)</option><option value="doble">🎯 Quad at Doble (Cambridge, MA 02138)</option><option value="pumphouse">🎯 Fredericksburg Pump House (Fredericksburg, VA 22401)</option><option value="brookline">🎯 Park Street Church Condo (Brookline, MA 02446)</option><option value="saginaw">🎯 Cornell Street Church (Saginaw, MI)</option><option value="ellsworth">🎯 Ellsworth Ave Bar + Loft (Pittsburgh, PA 15232)</option><option value="deertrail">🎯 Deer Trail Main Street (Deer Trail, CO 80105)</option><option value="silo-il">🎯 Taylor Springs Grain Silo (Taylor Springs, IL 62089)</option><option value="pennscave">🎯 Penn's Cave &amp; Wildlife Park (Centre Hall, PA 16828)</option><option value="goshen">🎯 Goshen Masonic Temple (Goshen, IN 46528)</option><option value="ashland">🎯 Ashland Church House (Ashland, WI 54806)</option><option value="traincar">🎯 Ocean City Train House (Ocean City, WA 98569)</option><option value="gwinn">🎯 Gwinn Middle School (Gwinn, MI 49841)</option><option value="odessa-hotel">🎯 Odessa Hotel (Odessa, WA 99159)</option><option value="odessa-silo">🎯 Moody Road Grain Silo (Odessa, WA 99159)</option><option value="lansford">🎯 Lansford Cathedral (Lansford, PA 18232)</option><option value="roy-bank">🎯 Roy Main Street Bank (Roy, MT 59471)</option><option value="perrysburg-jail">🎯 Perrysburg Jailhouse (Perrysburg, OH 43551)</option><option value="tionesta">🎯 Allegheny River Lighthouse (Tionesta, PA 16353)</option><option value="fortpierre">🎯 Missouri River Lighthouse (Fort Pierre, SD 57532)</option><option value="lenox">🎯 Berkshires Boarding School (Lenox, MA 01240)</option><option value="aboite">🎯 Aboite Schoolhouse (Fort Wayne, IN 46814)</option><option value="auburn-bank">🎯 Auburn Brick Bank (Auburn, NE 68305)</option><option value="danville">🎯 Hazel Street Live-Work (Danville, IL 61832)</option><option value="britt">🎯 Britt Country Church (Britt, IA 50423)</option></select>
+        <select id="tSel" style="font:15px 'Roboto Slab',serif;padding:7px;border:3px solid var(--navy);max-width:100%"></select>
         <div style="margin-top:12px;padding:12px;background:#fff8e6;border:2px solid var(--navy)">
           <strong>Option 1: copy the view from Google Maps (free, always works)</strong>
           <ol style="margin:6px 0">
-            <li><a class="btn" id="lOpen" href="https://www.google.com/maps/search/?api=1&amp;query=1001%20Vallejo%20St%2C%20San%20Francisco%2C%20CA%2094133" target="_blank" rel="noopener" style="padding:3px 8px;font-size:12px">Open this address in Google Maps ↗</a></li>
+            <li><a class="btn" id="lOpen" href="#" target="_blank" rel="noopener" style="padding:3px 8px;font-size:12px">Open this address in Google Maps ↗</a></li>
             <li>Drag the yellow person onto the street, then turn until the building fills the view.</li>
             <li>Copy the <strong>whole link from your browser's address bar</strong>, not the Share button's short link.<br>
               <small><strong>Or</strong>, for any photo including user-uploaded ones: click <strong>Share → Embed a map → COPY HTML</strong> and paste that.</small></li>
@@ -364,7 +365,7 @@
     <div class="modal-head"><strong id="mtitle">Map</strong><button id="mclose">Close ✕</button></div>
     <div class="mapbtns" id="mapbtns"></div>
     <div class="legend" id="mapnote"></div>
-    <iframe id="map" title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen=""></iframe>
+    <iframe id="map" title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -567,7 +568,10 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 /* ---- Google embeds ----
    Keyless "output=embed" maps work without setup. In-app Street View needs the
    official Maps Embed API (free), so it only runs once a key is saved. */
-const BUILT_IN_KEY="AIzaSyAXgHhcRwyvoWOB2unbhOB0O2WQtq1u8bc";
+const PUBLIC_KEY="AIzaSyAXgHhcRwyvoWOB2unbhOB0O2WQtq1u8bc";   // locked to the live website
+/* Builder key: only in your private builder copy. "Download updated app" always blanks it. */
+const BUILDER_KEY=/*BUILDERKEY_START*/""/*BUILDERKEY_END*/;
+const BUILT_IN_KEY=BUILDER_KEY||PUBLIC_KEY;
 let API_KEY=BUILT_IN_KEY; try{API_KEY=localStorage.getItem("arc-gkey")||BUILT_IN_KEY;}catch(e){}
 const Q=p=>encodeURIComponent(p.q||p.addr);
 const E="https://www.google.com/maps/embed/v1/";
@@ -943,6 +947,7 @@ function downloadApp(){
   code=put(code,"ADDED",json(allAdded));
   code=put(code,"BAKED",json(BAKED));
   code=put(code,"CONFIG",json(CONFIG));
+  code=put(code,"BUILDERKEY",'""');   // never ship the builder key
   s.textContent=code;
   const html="<!DOCTYPE html>\n"+doc.outerHTML;
   const a=document.createElement("a");
@@ -997,7 +1002,7 @@ document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeMap()
 
 
 /* ================== CONFIG + ADMIN PAGE + SUGGESTIONS ================== */
-const CONFIG_IN = /*CONFIG_START*/{}/*CONFIG_END*/;
+const CONFIG_IN = /*CONFIG_START*/{"suggestEmail":"bW9jLmxpYW1nQDU1NW5lbGxhbW5heXI="}/*CONFIG_END*/;
 let CONFIG_LOCAL={}; try{CONFIG_LOCAL=JSON.parse(localStorage.getItem("arc-config")||"{}");}catch(e){}
 let CONFIG={...CONFIG_IN,...CONFIG_LOCAL};
 function saveConfig(k,v){CONFIG_LOCAL[k]=v;CONFIG[k]=v;try{localStorage.setItem("arc-config",JSON.stringify(CONFIG_LOCAL));}catch(e){}}
@@ -1123,6 +1128,5 @@ fsStatus(); seStatus(); builderStatus();
 nextPair();
 syncAdmin();
 </script>
-
-
-</body></html>
+</body>
+</html>
