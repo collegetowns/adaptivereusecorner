@@ -1002,7 +1002,7 @@ document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeMap()
 
 
 /* ================== CONFIG + ADMIN PAGE + SUGGESTIONS ================== */
-const CONFIG_IN = /*CONFIG_START*/{"suggestEmail":"bW9jLmxpYW1nQDU1NW5lbGxhbW5heXI="}/*CONFIG_END*/;
+const CONFIG_IN = /*CONFIG_START*/{"suggestEmail":"bW9jLmxpYW1nQHJlbnJvY2VzdWVyKzU1NW5lbGxhbW5heXI="}/*CONFIG_END*/;
 let CONFIG_LOCAL={}; try{CONFIG_LOCAL=JSON.parse(localStorage.getItem("arc-config")||"{}");}catch(e){}
 let CONFIG={...CONFIG_IN,...CONFIG_LOCAL};
 function saveConfig(k,v){CONFIG_LOCAL[k]=v;CONFIG[k]=v;try{localStorage.setItem("arc-config",JSON.stringify(CONFIG_LOCAL));}catch(e){}}
