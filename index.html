@@ -722,7 +722,9 @@ function wireCards(){
     card.querySelectorAll(".viewtoggle button").forEach(btn=>btn.onclick=()=>setMode(btn.dataset.m));
     card.querySelector(".pick").onclick=()=>choose(i);
     card.querySelector("[data-map]").onclick=()=>openMap(p);
-    setMode(hasNoStreetView(p)||typeof p.lat!=="number"?"sat":"sv");
+    // Street View only once a view has been locked in or fine-tuned; otherwise a guessed
+    // location can land on someone's uploaded photo, so start on Satellite instead.
+    setMode(!BAKED[p.id]||hasNoStreetView(p)||typeof p.lat!=="number"?"sat":"sv");
   });
 }
 
