@@ -252,6 +252,7 @@
         <li><a href="https://www.collegetowns.org/p/my-own-students-slaughter-bear-story" target="_blank" rel="noopener">My own students' slaughter bear story</a></li>
         <li><a href="https://www.collegetowns.org/p/war-departments-university-witch-hunt" target="_blank" rel="noopener">The War Department's university witch hunt</a></li>
         <li><a href="https://www.collegetowns.org/p/in-defense-of-palm-trees" target="_blank" rel="noopener">In defense of palm trees</a></li>
+        <li><a href="https://www.collegetowns.org/p/jensen-huangs-higher-ed-fallout" target="_blank" rel="noopener">Jensen Huang's higher ed fallout</a></li>
       </ul>
       <p>Listings change. A property may have sold or changed price since it was featured. Distances are straight-line estimates.</p>
       <div class="keybox" id="suggest">
@@ -382,7 +383,8 @@ const ISSUE = {
   childcare:"https://www.collegetowns.org/p/why-are-universities-cutting-child",
   bear:"https://www.collegetowns.org/p/my-own-students-slaughter-bear-story",
   war:"https://www.collegetowns.org/p/war-departments-university-witch-hunt",
-  palm:"https://www.collegetowns.org/p/in-defense-of-palm-trees"
+  palm:"https://www.collegetowns.org/p/in-defense-of-palm-trees",
+  huang:"https://www.collegetowns.org/p/jensen-huangs-higher-ed-fallout"
 };
 // view: "sv" = Street View first, "sat" = satellite first
 const PROPS = [
@@ -517,6 +519,27 @@ const PROPS = [
    addr:"905 290th St, Britt, IA 50423", lat:43.10000, lng:-93.80000,
    blurb:"A rural Iowa church with its pews and altars still in place. You could convert it, or start your own revival.",
    link:"https://www.zillow.com/homedetails/905-290th-St-Britt-IA-50423/93855287_zpid/", site:"Zillow", issue:"palm"},
+  /* ---- from "Jensen Huang's higher ed fallout" (Big Ten Adaptive Reuse Corner) ---- */
+  {id:"attica-bank", name:"Attica Drive-Thru Bank", kind:"Former bank", price:"$235,000",
+   addr:"15045 E Tiffin St, Attica, OH 44807", lat:41.06500, lng:-82.88000,
+   blurb:"A small-town Ohio bank with its drive-thru lane still intact. It's not the grandest building, and the propane storage next door is a drawback, but it has character.",
+   link:"https://www.zillow.com/homedetails/15045-E-Tiffin-St-Attica-OH-44807/462138359_zpid/", site:"Zillow", issue:"huang"},
+  {id:"millmont-bunker", name:"Millmont Bunker Base", kind:"Former military facility", price:"$999,999",
+   addr:"410 Hassenplug Rd, Millmont, PA 17845", lat:40.88500, lng:-77.15000,
+   blurb:"A former military site in central Pennsylvania with an underground operations bunker straight out of a spy movie. College Towns called it a deal, and a place you have to see to believe. It's not far from Bucknell.",
+   link:"https://www.zillow.com/homedetails/410-Hassenplug-Rd-Millmont-PA-17845/465089406_zpid/", site:"Zillow", issue:"huang"},
+  {id:"council-hill", name:"Council Hill Church", kind:"Church conversion", price:"≈ $600,000",
+   addr:"6603 W Council Hill Rd, Scales Mound, IL 61075", lat:42.44000, lng:-90.32000,
+   blurb:"A country church that looks fully redone with stylish design, sitting in the middle of farmland in the Driftless Area. It's about half an hour from Dubuque's Loras College, though College Towns found the price high for the area.",
+   link:"https://www.zillow.com/homedetails/6603-W-Council-Hill-Rd-Scales-Mound-IL-61075/2056304931_zpid/", site:"Zillow", issue:"huang"},
+  {id:"oliver-inn", name:"The Oliver Inn", kind:"Victorian B&B", price:"$1,600,000",
+   addr:"630 W Washington St, South Bend, IN 46601", lat:41.67660, lng:-86.26000,
+   blurb:"An 1880s Queen Anne Victorian that now runs as a 13-bedroom bed-and-breakfast near Notre Dame. A stunner, and it should fill up on football Saturdays.",
+   link:"https://www.zillow.com/homedetails/630-W-Washington-St-South-Bend-IN-46601/77024636_zpid/", site:"Zillow", issue:"huang"},
+  {id:"blomkest-school", name:"Blomkest Schoolhouse", kind:"1930s school → home", price:"Under $400,000",
+   addr:"115 Main St S, Blomkest, MN 56216", lat:44.94250, lng:-95.02330,
+   blurb:"A 1930s school in a tiny Minnesota town, now zoned residential. From outside it still looks like a school, apart from some huge garage doors. The inside is a mystery, since the listing photos are virtually staged.",
+   link:"https://www.zillow.com/homedetails/115-Main-St-S-Blomkest-MN-56216/463890173_zpid/", site:"Zillow", issue:"huang"},
 ];
 /* Properties added with the "Add a property" form. ADDED_IN is written by
    "Download updated app"; ones added since then live in this browser. */
@@ -545,7 +568,8 @@ const UNIS = [
   ["University of Toledo",41.6580,-83.6140],["Bowling Green State",41.3780,-83.6370],["PennWest Clarion",41.2090,-79.3790],["Allegheny College",41.6480,-80.1450],
   ["South Dakota State",44.3190,-96.7840],["Black Hills State",44.4960,-103.8680],["Williams College",42.7120,-73.2030],["UMass Amherst",42.3868,-72.5301],
   ["Purdue Fort Wayne",41.1170,-85.1090],["University of Saint Francis",41.1070,-85.1660],["Peru State College",40.4770,-95.7300],["Nebraska–Lincoln",40.8202,-96.7005],
-  ["Danville Area Community College",40.1350,-87.6050],["UIUC",40.1020,-88.2272],["Waldorf University",43.2630,-93.6370],["Iowa State",42.0267,-93.6465],["Eastern Illinois",39.4830,-88.1750],["SIU Edwardsville",38.7930,-89.9970],
+  ["Danville Area Community College",40.1350,-87.6050],["UIUC",40.1020,-88.2272],["Waldorf University",43.2630,-93.6370],
+  ["Heidelberg University",41.1150,-83.1770],["Bucknell University",40.9545,-76.8836],["Loras College",42.5040,-90.6720],["Ridgewater College",45.1355,-95.0470],["Iowa State",42.0267,-93.6465],["Eastern Illinois",39.4830,-88.1750],["SIU Edwardsville",38.7930,-89.9970],
 ];
 const CITIES = [
   ["San Francisco",37.7749,-122.4194],["Oakland",37.8044,-122.2712],["Denver",39.7392,-104.9903],["Aurora, CO",39.7294,-104.8319],
@@ -557,7 +581,8 @@ const CITIES = [
   ["Duluth",46.7867,-92.1005],["Aberdeen, WA",46.9754,-123.8157],["Olympia",47.0379,-122.9007],["Marquette",46.5436,-87.3954],
   ["Spokane",47.6588,-117.4260],["Moses Lake",47.1301,-119.2781],["Allentown",40.6023,-75.4714],["Great Falls",47.5053,-111.3008],["Billings",45.7833,-108.5007],
   ["Toledo",41.6528,-83.5379],["Erie",42.1292,-80.0851],["Pierre",44.3683,-100.3510],["Pittsfield",42.4501,-73.2454],["Fort Wayne",41.0793,-85.1394],
-  ["Lincoln, NE",40.8136,-96.7026],["Omaha",41.2565,-95.9345],["Champaign",40.1164,-88.2434],["Danville, IL",40.1245,-87.6300],["Mason City",43.1536,-93.2010],["Springfield, IL",39.7817,-89.6501],["Goshen",41.5823,-85.8344],["South Bend",41.6764,-86.2520],
+  ["Lincoln, NE",40.8136,-96.7026],["Omaha",41.2565,-95.9345],["Champaign",40.1164,-88.2434],["Danville, IL",40.1245,-87.6300],["Mason City",43.1536,-93.2010],
+  ["Mansfield, OH",40.7584,-82.5154],["Williamsport",41.2412,-77.0011],["Dubuque",42.5006,-90.6646],["Willmar",45.1219,-95.0433],["Springfield, IL",39.7817,-89.6501],["Goshen",41.5823,-85.8344],["South Bend",41.6764,-86.2520],
 ];
 
 /* ================== HELPERS ================== */
@@ -943,7 +968,7 @@ function downloadApp(){
   doc.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.view==="vote"));
   doc.querySelector("#adminTab").setAttribute("hidden","");
   ["revMsg","fsStatus","sugMsg","seStatus"].forEach(i=>{const n=doc.querySelector("#"+i); if(n) n.innerHTML="";});
-  const s=[...doc.querySelectorAll("script")].find(n=>!n.src);
+  const s=[...doc.querySelectorAll("script")].find(n=>!n.src&&n.textContent.includes("/*"+"ADDED_START*/"));
   const mark=n=>["/*"+n+"_START*/","/*"+n+"_END*/"];
   const put=(txt,n,val)=>{const [a,b]=mark(n);const i=txt.indexOf(a),j=txt.indexOf(b);return txt.slice(0,i+a.length)+val+txt.slice(j);};
   let code=s.textContent;
